@@ -45,18 +45,18 @@ function current_pwd {
 # Git prompt characters
 GIT_PROMPT_PREFIX="%F{069} ❮%{$reset_color%}"
 GIT_PROMPT_SUFFIX="%F{069}❯%{$reset_color%}"
-GIT_PROMPT_AHEAD="%F{blue} (⬆ NUM) %{$reset_color%}"
-GIT_PROMPT_BEHIND="%F{cyan} (⬇ NUM) %{$reset_color%}"
+GIT_PROMPT_AHEAD="%F{135} (⬆ NUM) %{$reset_color%}"
+GIT_PROMPT_BEHIND="%F{057} (⬇ NUM) %{$reset_color%}"
 GIT_PROMPT_MERGING="%F{magenta}⚡︎ %{$reset_color%}"
 GIT_PROMPT_UNTRACKED="%F{197} ✖ %{$reset_color%}"
-GIT_PROMPT_MODIFIED="%F{yellow} ✚ %{$reset_color%}"
-GIT_PROMPT_STAGED="%F{green} ✔ %{$reset_color%}"
+GIT_PROMPT_MODIFIED="%F{142} ✚ %{$reset_color%}"
+GIT_PROMPT_STAGED="%F{034} ✔ %{$reset_color%}"
 
 # Git addition to prompt if within a Git repository
 function git_prompt_string() {
   local git_where="$(parse_git_branch)"
   [ -n "$git_where" ] &&
-  echo "± %F{238}${git_where#(refs/heads/|tags/)}$(parse_git_state)"
+  echo "± %F{240}${git_where#(refs/heads/|tags/)}$(parse_git_state)"
 }
 
 # Find the name of the branch of the current working directory
