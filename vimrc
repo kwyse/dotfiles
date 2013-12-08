@@ -108,17 +108,21 @@ if has("autocmd")
   autocmd InsertLeave * match TrailingWhitespace /\s\+$/
   autocmd BufWinLeave * call clearmatches()
 
-  " Set file types to unrecognised extensions
+  " Highlight right margin
+  highlight ColorColumn ctermbg=235 guibg=#333333
+
+  " Set file types for unrecognised extensions
   autocmd BufRead,BufNewFile *.txt setfiletype text
 
   " Enable file type-specific formatting
   autocmd Filetype gitcommit setlocal tw=72 spell
-  autocmd Filetype java setlocal ts=4 sts=4 sw=4 noexpandtab
-  autocmd Filetype make setlocal ts=2 sts=2 sw=2 noexpandtab
-  autocmd Filetype python setlocal ts=4 sts=4 sw=4 expandtab
+  autocmd Filetype java setlocal ts=4 sts=4 sw=4 noet
+  autocmd Filetype make setlocal ts=2 sts=2 sw=2 noet
+  autocmd Filetype python setlocal ts=4 sts=4 sw=4 et
+  autocmd Filetype ruby setlocal ts=2 sts=2 sw=2 et cc=80
   autocmd Filetype tex setlocal tw=72 spell
   autocmd Filetype text setlocal tw=72 spell
-  autocmd Filetype yaml setlocal ts=2 sts=2 sw=2 expandtab
+  autocmd Filetype yaml setlocal ts=2 sts=2 sw=2 et
 endif
 
 " ------------------------------------------------------------------- }}
