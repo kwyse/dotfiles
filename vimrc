@@ -37,6 +37,7 @@ Bundle 'tpope/vim-commentary'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-unimpaired'
+Bundle 'vim-ruby/vim-ruby'
 
 " Vim distribution plugins
 runtime macros/matchit.vim      " Enable matchit.vim
@@ -180,6 +181,11 @@ map <D-0> :tablast<CR>
 
 " nerdtree
 map <C-n> :NERDTreeToggle<CR>:NERDTreeMirror<CR>
+
+" syntastic
+let g:syntastic_check_on_open=1
+let g:syntastic_enable_signs=1
+let g:syntastic_ruby_checkers=['mri', 'rubocop']
 
 " vim-airline
 let g:airline_theme = 'molokai'
