@@ -23,6 +23,6 @@ export GREP_OPTIONS='--color=auto'
 export GREP_COLOR='3;33'
 export LESS='--ignore-case --raw-control-chars'
 export PAGER='less'
-export PATH=$PATH~/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:~/bin
+export PATH=$PATH~/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:~/bin:/usr/texbin
 export TERM=xterm-256color
 
