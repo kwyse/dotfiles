@@ -143,6 +143,15 @@ map <leader>et :tabe %%
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 
+" Remove highlighted search matches
+nnoremap <silent> <C-[> :noh<CR><C-[>
+
+" Display word count for buffer
+nmap <leader>wc :%s/\v\w+//gn<CR>
+
+" Display word count for searches
+nmap <leader>ws :%s///gn<CR>
+
 " Switch to header/source file
 map <F4> :e %:p:s,.hpp$,.X123X,:s,.cpp$,.hpp,:s,.X123X$,.cpp,<CR>
 
