@@ -27,22 +27,33 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 
 Bundle 'bling/vim-airline'
+Bundle 'gerw/vim-HiLinkTrace'
+Bundle 'godlygeek/tabular'
+Bundle 'kana/vim-textobj-entire'
+Bundle 'kana/vim-textobj-lastpat'
+Bundle 'kana/vim-textobj-user'
 Bundle 'majutsushi/tagbar'
 Bundle 'myusuf3/numbers.vim'
+Bundle 'nelstrom/vim-qargs'
+Bundle 'nelstrom/vim-visual-star-search'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
 Bundle 'Shougo/neocomplcache.vim'
+Bundle 'sjl/gundo.vim'
+Bundle 'tpope/vim-abolish'
 Bundle 'tpope/vim-commentary'
+Bundle 'tpope/vim-cucumber'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-unimpaired'
 Bundle 'vim-ruby/vim-ruby'
+Bundle 'vim-scripts/hexHighlight.vim'
 
 " Vim distribution plugins
 runtime macros/matchit.vim      " Enable matchit.vim
 
-filetype plugin indent on       " Enable file type plugins
+filetype plugin indent on       " Re-enable after Vundle core
 
 " ------------------------------------------------------------------- }}
 " Interface --------------------------------------------------------- {{
@@ -66,11 +77,14 @@ set tabpagemax=10               " Set a maximum of 10 tab pages
 set showmode                    " Display current mode
 set cursorline                  " Highlight the current cursor line
 set linespace=0                 " Disallow extra line space between rows
+set spelllang=en_gb             " Set spell checker to British English
 
 set expandtab smarttab          " Use spaces instead of tabs
 set sw=2 ts=2 sts=2             " Set tab width
+set formatoptions+=cqt          " Specify format options
+set formatprg=par               " Set 'par' as the external formatter
 set autoindent smartindent      " Enable smart indentation
-set wrap                        " Enable word wrap
+set wrap linebreak nolist       " Enable soft word wrapping
 set nrformats=                  " All numerals treated as decimal
 set listchars=tab:▸\ ,eol:¬     " Use TextMate tab and EOL symbols
 set backspace=eol,start,indent  " Configure Backspace to work correctly
@@ -79,7 +93,7 @@ set whichwrap+=b,s,<,>,h,l,[,]  " Wrap around line beginnings/endings
 syntax enable                   " Enable syntax highlighting
 colorscheme molokai             " Set color scheme
 if has("gui_running")           " Set GUI specific options
-  g:molokai_original == 1       " Enable alternate molokai BG color
+  let g:molokai_original = 1    " Enable alternate molokai BG color
   set guioptions-=r             " Remove scrollbar
   set guioptions-=T             " Remove toolbar
   set guioptions+=e             " Enable tab pages
@@ -100,6 +114,9 @@ set autoread                        " Auto-read external changes
 
 if has("autocmd")
   filetype on                       " Enable file type detection
+
+  " Re-source vimrc on save
+  autocmd! BufWritePost .vimrc source $MYVIMRC
 
   " Highlight trailing whitespaces
   highlight TrailingWhitespace ctermbg=red guibg=red
@@ -122,13 +139,16 @@ if has("autocmd")
   autocmd Filetype python setlocal ts=4 sts=4 sw=4 et
   autocmd Filetype ruby setlocal ts=2 sts=2 sw=2 et cc=80
   autocmd Filetype tex setlocal tw=72 spell
-  autocmd Filetype text setlocal tw=72 spell
+  autocmd Filetype text setlocal tw=72 spell fo+=a
   autocmd Filetype yaml setlocal ts=2 sts=2 sw=2 et
 endif
 
 " ------------------------------------------------------------------- }}
 " Key mappings ------------------------------------------------------ {{
 " ======================================================================
+
+" Easily edit .vimrc file
+nmap <leader>vrc :tabe $MYVIMRC<CR>
 
 " Add '%%' to expand to the path of the active buffer for Ex commands
 cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
@@ -151,6 +171,10 @@ nmap <leader>wc :%s/\v\w+//gn<CR>
 
 " Display word count for searches
 nmap <leader>ws :%s///gn<CR>
+
+" Set '&' to include flags from previous substitution
+nnoremap & :&&<CR>
+xnoremap & :&&<CR>
 
 " Switch to header/source file
 map <F4> :e %:p:s,.hpp$,.X123X,:s,.cpp$,.hpp,:s,.X123X$,.cpp,<CR>
@@ -188,6 +212,11 @@ map <D-0> :tablast<CR>
 " Plugin options ---------------------------------------------------- {{
 " ======================================================================
 
+" hexhighlighter
+nmap <leader>hh :call HexHighlight()<Return>
+
+" gundo
+nnoremap <leader>gun :GundoToggle<CR>
 " nerdtree
 map <C-n> :NERDTreeToggle<CR>:NERDTreeMirror<CR>
 
@@ -204,9 +233,13 @@ nnoremap <silent> <leader>gco :Gcommit<CR>
 nnoremap <silent> <leader>gph :Git push<CR>
 nnoremap <silent> <leader>gst :Gstatus<CR>
 
+" vim-unimpaired
+vmap [e [egv
+vmap ]e ]egv
+
+
 " ------------------------------------------------------------------- }}
 " Helper functions -------------------------------------------------- {{
 " ======================================================================
 
 " ------------------------------------------------------------------- }}
-
