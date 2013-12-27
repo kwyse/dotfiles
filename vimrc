@@ -1,6 +1,6 @@
 " Intro ------------------------------------------------------------- {{
 " ======================================================================
-" vim: set sw=2 ts=2 sts=2 et tw=72 nospell:
+" vim: set sw=2 ts=2 sts=2 et tw=72:
 " vim: set foldmethod=marker foldmarker={{,}} foldlevel=0:
 "
 "  __                                                     .__
@@ -16,53 +16,56 @@
 " Setup ------------------------------------------------------------- {{
 " ======================================================================
 
-set nocompatible                " Enable incompatibility mode with vi
-
 " Speed up start-up time
 let g:ruby_path = system('rvm current')
 
-" Vundle core
-filetype off
-set rtp+=~/.vim/bundle/vundle
-call vundle#rc()
+" NeoBundle core
+if has('vim_starting')
+  set nocompatible
+  set runtimepath+=~/.vim/bundle/neobundle.vim/
+endif
+call neobundle#rc(expand('~/.vim/bundle/'))
 
-" Vundle plugins
-Bundle 'gmarik/vundle'
-
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'ap/vim-css-color'
-Bundle 'bling/vim-airline'
-Bundle 'dhruvasagar/vim-table-mode'
-Bundle 'gerw/vim-HiLinkTrace'
-Bundle 'godlygeek/tabular'
-Bundle 'gregsexton/gitv'
-Bundle 'kana/vim-textobj-entire'
-Bundle 'kana/vim-textobj-lastpat'
-Bundle 'kana/vim-textobj-user'
-Bundle 'majutsushi/tagbar'
-Bundle 'mileszs/ack.vim'
-Bundle 'myusuf3/numbers.vim'
-Bundle 'nelstrom/vim-qargs'
-Bundle 'nelstrom/vim-visual-star-search'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'scrooloose/nerdtree'
-Bundle 'scrooloose/syntastic'
-Bundle 'Shougo/neocomplcache.vim'
-Bundle 'sjl/gundo.vim'
-Bundle 'tpope/vim-abolish'
-Bundle 'tpope/vim-commentary'
-Bundle 'tpope/vim-cucumber'
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-speeddating'
-Bundle 'tpope/vim-surround'
-Bundle 'tpope/vim-unimpaired'
-Bundle 'Valloric/YouCompleteMe'
-Bundle 'vim-ruby/vim-ruby'
+NeoBundleFetch 'Shougo/neobundle.vim'
+NeoBundle 'altercation/vim-colors-solarized'
+NeoBundle 'ap/vim-css-color'
+NeoBundle 'bling/vim-airline'
+NeoBundle 'bling/vim-bufferline'
+NeoBundle 'dhruvasagar/vim-table-mode'
+NeoBundle 'edkolev/tmuxline.vim'
+NeoBundle 'gerw/vim-HiLinkTrace'
+NeoBundle 'godlygeek/tabular'
+NeoBundle 'gregsexton/gitv'
+NeoBundle 'kana/vim-textobj-entire'
+NeoBundle 'kana/vim-textobj-lastpat'
+NeoBundle 'kana/vim-textobj-user'
+NeoBundle 'majutsushi/tagbar'
+NeoBundle 'mhinz/vim-signify'
+NeoBundle 'mhinz/vim-startify'
+NeoBundle 'mileszs/ack.vim'
+NeoBundle 'myusuf3/numbers.vim'
+NeoBundle 'nelstrom/vim-qargs'
+NeoBundle 'nelstrom/vim-visual-star-search'
+NeoBundle 'scrooloose/nerdcommenter'
+NeoBundle 'scrooloose/nerdtree'
+NeoBundle 'scrooloose/syntastic'
+NeoBundle 'Shougo/neocomplcache.vim'
+NeoBundle 'sjl/gundo.vim'
+NeoBundle 'tpope/vim-abolish'
+NeoBundle 'tpope/vim-commentary'
+NeoBundle 'tpope/vim-cucumber'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'tpope/vim-speeddating'
+NeoBundle 'tpope/vim-surround'
+NeoBundle 'tpope/vim-unimpaired'
+NeoBundle 'Valloric/YouCompleteMe'
+NeoBundle 'vim-ruby/vim-ruby'
 
 " Vim distribution plugins
 runtime macros/matchit.vim      " Enable matchit.vim
 
-filetype plugin indent on       " Re-enable after Vundle core
+filetype plugin indent on       " Re-enable after NeoBundle core
+NeoBundleCheck
 
 " ------------------------------------------------------------------- }}
 " Interface --------------------------------------------------------- {{
@@ -86,7 +89,6 @@ set shell=zsh                   " Set zsh as the default shell
 set mousehide                   " Hide mouse cursor while typing
 set tabpagemax=10               " Set a maximum of 10 tab pages
 set showmode                    " Display current mode
-set cursorline                  " Highlight the current cursor line
 set linespace=0                 " Disallow extra line space between rows
 set spelllang=en_gb             " Set spell checker to British English
 
@@ -106,7 +108,7 @@ colorscheme solarized           " Set color scheme
 set background=dark
 if has("gui_running")           " Set GUI specific options
   set guifont=Inconsolata:h13   " Set font
-  set guioptions-=Lr            " Remove scrollbars
+  set guioptions-=rL            " Remove scrollbars
   set guioptions-=T             " Remove toolbar
   set guioptions+=e             " Enable tab pages
   set t_Co=256                  " Set terminal colour
@@ -168,9 +170,15 @@ nnoremap <silent> <leader>' :call TabLineToggle()<CR>
 " Toggle colour column
 nnoremap <silent> <leader>coo :call g:ColorColumnToggle()<CR>
 
+" Dismiss quickfix and location lists
+nnoremap <silent> <leader>- :cclose<CR>:lclose<CR>
+
 " Use very magic regex by default
 nnoremap / /\v
 vnoremap / /\v
+
+" Toggle folds quicker
+nnoremap <Space> za
 
 " Fix spelling mistakes in quick succession, assuming first correction
 nmap <leader>. ]s1z=
@@ -242,14 +250,18 @@ noremap <leader>` :tabclose<CR>
 " Plugin options ---------------------------------------------------- {{
 " ======================================================================
 
-" hexhighlighter
-nmap <leader>hh :call HexHighlight()<Return>
-
 " gundo
 nnoremap <leader>gun :GundoToggle<CR>
 
 " nerdtree
 map <leader>n :NERDTreeToggle<CR>:NERDTreeMirror<CR>
+
+" signify
+let g:signify_vcs_list = [ 'git' ]
+
+" solarized
+highlight clear SignColumn
+autocmd ColorScheme * highlight clear SignColumn
 
 " syntastic
 let g:syntastic_check_on_open=1
