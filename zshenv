@@ -25,4 +25,5 @@ export LESS='--ignore-case --raw-control-chars'
 export PAGER='less'
 export PATH=$PATH~/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:~/bin:/usr/texbin
 export TERM=xterm-256color
-
+export RI='-f ansi'
+export LESS='-R'
