@@ -27,12 +27,10 @@ endif
 call neobundle#rc(expand('~/.vim/bundle/'))
 
 NeoBundleFetch 'Shougo/neobundle.vim'
-NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'ap/vim-css-color'
 NeoBundle 'bling/vim-airline'
 NeoBundle 'bling/vim-bufferline'
 NeoBundle 'dhruvasagar/vim-table-mode'
-NeoBundle 'edkolev/tmuxline.vim'
 NeoBundle 'gerw/vim-HiLinkTrace'
 NeoBundle 'godlygeek/tabular'
 NeoBundle 'gregsexton/gitv'
@@ -41,7 +39,6 @@ NeoBundle 'kana/vim-textobj-lastpat'
 NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'mhinz/vim-signify'
-NeoBundle 'mhinz/vim-startify'
 NeoBundle 'mileszs/ack.vim'
 NeoBundle 'myusuf3/numbers.vim'
 NeoBundle 'nelstrom/vim-qargs'
@@ -49,7 +46,6 @@ NeoBundle 'nelstrom/vim-visual-star-search'
 NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'scrooloose/syntastic'
-NeoBundle 'Shougo/neocomplcache.vim'
 NeoBundle 'sjl/gundo.vim'
 NeoBundle 'tpope/vim-abolish'
 NeoBundle 'tpope/vim-commentary'
@@ -58,7 +54,6 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-speeddating'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-unimpaired'
-NeoBundle 'Valloric/YouCompleteMe'
 NeoBundle 'vim-ruby/vim-ruby'
 
 " Vim distribution plugins
@@ -71,6 +66,7 @@ NeoBundleCheck
 " Interface --------------------------------------------------------- {{
 " ======================================================================
 
+set t_ut=                       " Play nice with tmux
 set ruler                       " Always show current cursor position
 set number                      " Enable line numbers
 set cmdheight=1                 " Set the height of the command bar
@@ -104,8 +100,7 @@ set backspace=eol,start,indent  " Configure Backspace to work correctly
 set whichwrap+=b,s,<,>,h,l,[,]  " Wrap around line beginnings/endings
 
 syntax enable                   " Enable syntax highlighting
-colorscheme solarized           " Set color scheme
-set background=dark
+colorscheme rescind             " Set color scheme
 if has("gui_running")           " Set GUI specific options
   set guifont=Inconsolata:h13   " Set font
   set guioptions-=rL            " Remove scrollbars
@@ -151,7 +146,7 @@ if has("autocmd")
   autocmd Filetype java setlocal ts=4 sts=4 sw=4 noet
   autocmd Filetype make setlocal ts=2 sts=2 sw=2 noet
   autocmd Filetype python setlocal ts=4 sts=4 sw=4 et
-  autocmd Filetype ruby setlocal tw=80 ts=2 sts=2 sw=2 et cc=81
+  autocmd Filetype ruby setlocal tw=80 ts=2 sts=2 sw=2 et
   autocmd Filetype tex setlocal tw=72 spell
   autocmd Filetype text setlocal tw=72 spell fo+=a
   autocmd Filetype yaml setlocal ts=2 sts=2 sw=2 et
@@ -250,6 +245,12 @@ noremap <leader>` :tabclose<CR>
 " Plugin options ---------------------------------------------------- {{
 " ======================================================================
 
+" airline
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+
 " gundo
 nnoremap <leader>gun :GundoToggle<CR>
 
@@ -259,20 +260,18 @@ map <leader>n :NERDTreeToggle<CR>:NERDTreeMirror<CR>
 " signify
 let g:signify_vcs_list = [ 'git' ]
 
-" solarized
-highlight clear SignColumn
-autocmd ColorScheme * highlight clear SignColumn
-
 " syntastic
 let g:syntastic_check_on_open=1
 let g:syntastic_enable_signs=1
 let g:syntastic_ruby_checkers=['mri', 'rubocop']
 let g:syntastic_error_symbol = '✗'
 let g:syntastic_warning_symbol = '!'
+let g:syntastic_style_error_symbol = '*'
+let g:syntastic_style_warning_symbol = '?'
 nnoremap <silent> <leader>se :Errors<CR>
 
 " vim-airline
-let g:airline_theme = 'solarized'
+let g:airline_theme = 'bubblegum'
 
 " vim-fugitive
 nnoremap <silent> <leader>gco :Gcommit<CR>
@@ -282,7 +281,6 @@ nnoremap <silent> <leader>gst :Gstatus<CR>
 " vim-unimpaired
 vmap [e [egv
 vmap ]e ]egv
-
 
 " ------------------------------------------------------------------- }}
 " Helper functions -------------------------------------------------- {{
