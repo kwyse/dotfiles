@@ -100,7 +100,7 @@ set backspace=eol,start,indent  " Configure Backspace to work correctly
 set whichwrap+=b,s,<,>,h,l,[,]  " Wrap around line beginnings/endings
 
 syntax enable                   " Enable syntax highlighting
-colorscheme rescind             " Set color scheme
+colorscheme night_springs             " Set color scheme
 if has("gui_running")           " Set GUI specific options
   set guifont=Inconsolata:h13   " Set font
   set guioptions-=rL            " Remove scrollbars
@@ -147,7 +147,7 @@ if has("autocmd")
   autocmd Filetype make setlocal ts=2 sts=2 sw=2 noet
   autocmd Filetype python setlocal ts=4 sts=4 sw=4 et
   autocmd Filetype ruby setlocal tw=80 ts=2 sts=2 sw=2 et
-  autocmd Filetype tex setlocal tw=72 spell
+  autocmd Filetype tex setlocal tw=72 spell makeprg=pdflatex\ %
   autocmd Filetype text setlocal tw=72 spell fo+=a
   autocmd Filetype yaml setlocal ts=2 sts=2 sw=2 et
 endif

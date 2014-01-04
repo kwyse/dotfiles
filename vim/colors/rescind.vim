@@ -20,6 +20,7 @@ hi  Conditional   guifg=#D60C60  ctermfg=161   guibg=NONE     ctermbg=NONE  gui=
 hi  Constant      guifg=#AE81FF  ctermfg=141   guibg=NONE     ctermbg=NONE  gui=BOLD       cterm=BOLD
 hi  Cursor        guifg=#000000  ctermfg=16    guibg=#F8F8F8  ctermbg=231   gui=NONE       cterm=NONE
 hi  Define        guifg=#2F8EE0  ctermfg=32    guibg=NONE     ctermbg=NONE  gui=BOLD       cterm=BOLD
+hi  Directory     guifg=#2F8EE0  ctermfg=32    guibg=NONE     ctermbg=NONE  gui=BOLD       cterm=BOLD
 hi  Delimeter     guifg=#DBDBDB  ctermfg=253   guibg=NONE     ctermbg=NONE  gui=NONE       cterm=NONE
 hi  Function      guifg=#14ABB3  ctermfg=37    guibg=NONE     ctermbg=NONE  gui=NONE       cterm=NONE
 hi  Identifier    guifg=#D75F00  ctermfg=166   guibg=NONE     ctermbg=NONE  gui=NONE       cterm=NONE
@@ -37,7 +38,6 @@ hi  SpellBad      guisp=#FF0000  ctermfg=225   guibg=NONE     ctermbg=NONE  gui=
 hi  SpellCap      guisp=#0000FF  ctermfg=21    guibg=NONE     ctermbg=NONE  gui=UNDERCURL  cterm=UNDERCURL
 hi  SpellLocal    guisp=#00FFFF  ctermfg=87    guibg=NONE     ctermbg=NONE  gui=UNDERCURL  cterm=UNDERCURL
 hi  SpellRare     guisp=#FF00FF  ctermfg=201   guibg=NONE     ctermbg=NONE  gui=UNDERCURL  cterm=UNDERCURL
-hi  Statement     guifg=#D60C60  ctermfg=161   guibg=NONE     ctermbg=NONE  gui=BOLD       cterm=BOLD
 hi  Statement     guifg=#D60C60  ctermfg=161   guibg=NONE     ctermbg=NONE  gui=BOLD       cterm=BOLD
 hi  String        guifg=#D7D700  ctermfg=184   guibg=NONE     ctermbg=NONE  gui=NONE       cterm=NONE
 hi  Todo          guifg=#8F8F8F  ctermfg=245   guibg=NONE     ctermbg=NONE  gui=NONE       cterm=NONE
