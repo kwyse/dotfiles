@@ -27,3 +27,4 @@ export PATH=$PATH~/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:~/bin:/usr/texbin
 export TERM=xterm-256color
 export RI='-f ansi'
 export LESS='-R'
+export ANDROID_HOME='/Users/krishanwyse/work/old/Android/sdk'

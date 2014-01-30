@@ -13,3 +13,5 @@
 # Load RVM into the shell session
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
+#THIS MUST BE AT THE END OF THE FILE FOR GVM TO WORK!!!
+[[ -s "/Users/krishanwyse/.gvm/bin/gvm-init.sh" ]] && source "/Users/krishanwyse/.gvm/bin/gvm-init.sh"

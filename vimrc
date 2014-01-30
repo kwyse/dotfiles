@@ -29,7 +29,7 @@ call neobundle#rc(expand('~/.vim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'ap/vim-css-color'
 NeoBundle 'bling/vim-airline'
-NeoBundle 'bling/vim-bufferline'
+" NeoBundle 'bling/vim-bufferline'
 NeoBundle 'dhruvasagar/vim-table-mode'
 NeoBundle 'gerw/vim-HiLinkTrace'
 NeoBundle 'godlygeek/tabular'
@@ -46,6 +46,7 @@ NeoBundle 'nelstrom/vim-visual-star-search'
 NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'scrooloose/syntastic'
+NeoBundle 'Shougo/unite.vim'
 NeoBundle 'sjl/gundo.vim'
 NeoBundle 'tpope/vim-abolish'
 NeoBundle 'tpope/vim-commentary'
@@ -54,7 +55,9 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-speeddating'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-unimpaired'
+" NeoBundle 'Valloric/YouCompleteMe'
 NeoBundle 'vim-ruby/vim-ruby'
+NeoBundle 'vim-scripts/a.vim'
 
 " Vim distribution plugins
 runtime macros/matchit.vim      " Enable matchit.vim
@@ -148,7 +151,7 @@ if has("autocmd")
   autocmd Filetype python setlocal ts=4 sts=4 sw=4 et
   autocmd Filetype ruby setlocal tw=80 ts=2 sts=2 sw=2 et
   autocmd Filetype tex setlocal tw=72 spell makeprg=pdflatex\ %
-  autocmd Filetype text setlocal tw=72 spell fo+=a
+  autocmd Filetype text setlocal tw=72 fo+=a
   autocmd Filetype yaml setlocal ts=2 sts=2 sw=2 et
 endif
 
@@ -251,8 +254,14 @@ let g:airline_left_alt_sep = ''
 let g:airline_right_sep = ''
 let g:airline_right_alt_sep = ''
 
+" alternate
+nnoremap <silent> <leader>aa :A<CR>
+
 " gundo
 nnoremap <leader>gun :GundoToggle<CR>
+
+" nerdcommenter
+let NERDSpaceDelims=1
 
 " nerdtree
 map <leader>n :NERDTreeToggle<CR>:NERDTreeMirror<CR>
@@ -264,11 +273,15 @@ let g:signify_vcs_list = [ 'git' ]
 let g:syntastic_check_on_open=1
 let g:syntastic_enable_signs=1
 let g:syntastic_ruby_checkers=['mri', 'rubocop']
+let g:syntastic_cpp_checkers=['oclint']
 let g:syntastic_error_symbol = '✗'
 let g:syntastic_warning_symbol = '!'
 let g:syntastic_style_error_symbol = '*'
 let g:syntastic_style_warning_symbol = '?'
 nnoremap <silent> <leader>se :Errors<CR>
+
+" unite
+nnoremap <C-p> :Unite -start-insert file_rec<CR>
 
 " vim-airline
 let g:airline_theme = 'bubblegum'

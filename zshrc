@@ -295,3 +295,6 @@ xdvi() { command xdvi ${*:-*.dvi(om[1])} }
 
 # ------------------------------------------------------------------- }}
 
+
+#THIS MUST BE AT THE END OF THE FILE FOR GVM TO WORK!!!
+# [[ -s "/Users/krishanwyse/.gvm/bin/gvm-init.sh" ]] && source "/Users/krishanwyse/.gvm/bin/gvm-init.sh"
