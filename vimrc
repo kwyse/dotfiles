@@ -30,10 +30,12 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'ap/vim-css-color'
 NeoBundle 'bling/vim-airline'
 " NeoBundle 'bling/vim-bufferline'
+NeoBundle 'dbakker/vim-projectroot'
 NeoBundle 'dhruvasagar/vim-table-mode'
 NeoBundle 'gerw/vim-HiLinkTrace'
 NeoBundle 'godlygeek/tabular'
 NeoBundle 'gregsexton/gitv'
+NeoBundle 'honza/vim-snippets'
 NeoBundle 'kana/vim-textobj-entire'
 NeoBundle 'kana/vim-textobj-lastpat'
 NeoBundle 'kana/vim-textobj-user'
@@ -47,6 +49,7 @@ NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'Shougo/unite.vim'
+NeoBundle 'SirVer/ultisnips'
 NeoBundle 'sjl/gundo.vim'
 NeoBundle 'tpope/vim-abolish'
 NeoBundle 'tpope/vim-commentary'
@@ -55,7 +58,7 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-speeddating'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-unimpaired'
-" NeoBundle 'Valloric/YouCompleteMe'
+NeoBundle 'Valloric/YouCompleteMe'
 NeoBundle 'vim-ruby/vim-ruby'
 NeoBundle 'vim-scripts/a.vim'
 
@@ -95,6 +98,7 @@ set expandtab smarttab          " Use spaces instead of tabs
 set sw=2 ts=2 sts=2             " Set tab width
 set formatoptions+=cqt          " Specify format options
 set formatprg=par               " Set 'par' as the external formatter
+set completeopt-=preview        " Disable preview window
 set autoindent smartindent      " Enable smart indentation
 set wrap linebreak nolist       " Enable soft word wrapping
 set nrformats=                  " All numerals treated as decimal
@@ -140,17 +144,19 @@ if has("autocmd")
 
   " Highlight right margin
   highlight ColorColumn ctermbg=235 guibg=#333333
+  autocmd FileType * setlocal formatoptions-=r formatoptions-=o
 
   " Set file types for unrecognised extensions
   autocmd BufRead,BufNewFile *.txt setfiletype text
 
   " Enable file type-specific formatting
   autocmd Filetype gitcommit setlocal tw=72 spell
+  autocmd Filetype cpp setlocal commentstring=\/\/\ %s
   autocmd Filetype java setlocal ts=4 sts=4 sw=4 noet
   autocmd Filetype make setlocal ts=2 sts=2 sw=2 noet
   autocmd Filetype python setlocal ts=4 sts=4 sw=4 et
   autocmd Filetype ruby setlocal tw=80 ts=2 sts=2 sw=2 et
-  autocmd Filetype tex setlocal tw=72 spell makeprg=pdflatex\ %
+  autocmd Filetype tex setlocal tw=72 spell makeprg=pdflatex\ -shell-escape\ %
   autocmd Filetype text setlocal tw=72 fo+=a
   autocmd Filetype yaml setlocal ts=2 sts=2 sw=2 et
 endif
@@ -170,6 +176,7 @@ nnoremap <silent> <leader>coo :call g:ColorColumnToggle()<CR>
 
 " Dismiss quickfix and location lists
 nnoremap <silent> <leader>- :cclose<CR>:lclose<CR>
+nnoremap <silent> <leader>= :copen<CR>
 
 " Use very magic regex by default
 nnoremap / /\v
@@ -244,6 +251,10 @@ noremap <leader>9 9gt
 noremap <leader>0 :tablast<CR>
 noremap <leader>` :tabclose<CR>
 
+map <leader>bp :lcd %% \| mak<CR>
+map <leader>bb :ProjectRootCD<CR>:mak<CR>
+map <leader>bc :ProjectRootCD<CR>:mak clean<CR>
+
 " ------------------------------------------------------------------- }}
 " Plugin options ---------------------------------------------------- {{
 " ======================================================================
@@ -273,12 +284,19 @@ let g:signify_vcs_list = [ 'git' ]
 let g:syntastic_check_on_open=1
 let g:syntastic_enable_signs=1
 let g:syntastic_ruby_checkers=['mri', 'rubocop']
-let g:syntastic_cpp_checkers=['oclint']
+let g:syntastic_cpp_checkers=['gcc', 'oclint']
 let g:syntastic_error_symbol = '✗'
 let g:syntastic_warning_symbol = '!'
 let g:syntastic_style_error_symbol = '*'
 let g:syntastic_style_warning_symbol = '?'
+let g:syntastic_cpp_check_header = 1
+let g:syntastic_cpp_auto_refresh_includes = 1
+let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libc++'
+let g:syntastic_cpp_compiler = 'clang++'
 nnoremap <silent> <leader>se :Errors<CR>
+
+" ultisnips
+" let g:UltiSnipsExpandTrigger="<tab>"
 
 " unite
 nnoremap <C-p> :Unite -start-insert file_rec<CR>
@@ -294,6 +312,12 @@ nnoremap <silent> <leader>gst :Gstatus<CR>
 " vim-unimpaired
 vmap [e [egv
 vmap ]e ]egv
+
+" youcompleteme
+let g:ycm_global_ycm_extra_conf = '~/bin/.ycm_extra_conf.py'
+let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_add_preview_to_completeopt = 0
 
 " ------------------------------------------------------------------- }}
 " Helper functions -------------------------------------------------- {{
