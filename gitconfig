@@ -1,0 +1,15 @@
+[core]
+	editor = vim
+	ui = true
+	autocrlf = input
+	safecrlf = true
+[push]
+	default = simple
+[alias]
+  ch = checkout
+  co = commit
+  st = status
+  br = branch
+  hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+  type = cat-file -t
+  dump = cat-file -p
