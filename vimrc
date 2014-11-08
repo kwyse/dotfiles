@@ -27,6 +27,7 @@ endif
 call neobundle#rc(expand('~/.vim/bundle/'))
 
 NeoBundleFetch 'Shougo/neobundle.vim'
+NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'ap/vim-css-color'
 NeoBundle 'bling/vim-airline'
 " NeoBundle 'bling/vim-bufferline'
@@ -39,8 +40,11 @@ NeoBundle 'honza/vim-snippets'
 NeoBundle 'kana/vim-textobj-entire'
 NeoBundle 'kana/vim-textobj-lastpat'
 NeoBundle 'kana/vim-textobj-user'
+" NeoBundle 'lervag/vim-latex'
 NeoBundle 'majutsushi/tagbar'
+NeoBundle 'mattn/emmet-vim'
 NeoBundle 'mhinz/vim-signify'
+NeoBundle 'mhinz/vim-startify'
 NeoBundle 'mileszs/ack.vim'
 NeoBundle 'myusuf3/numbers.vim'
 NeoBundle 'nelstrom/vim-qargs'
@@ -49,7 +53,15 @@ NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'Shougo/unite.vim'
-NeoBundle 'SirVer/ultisnips'
+NeoBundle 'Shougo/vimproc.vim', {
+      \   'build' : {
+      \     'windows' : 'tools\\update-dll-mingw',
+      \     'cygwin'  : 'make -f make_cygwin.mak',
+      \     'mac'     : 'make -f make_mac.mak',
+      \     'unix'    : 'make -f make_unix.mak'
+      \   },
+      \ }
+" NeoBundle 'SirVer/ultisnips'
 NeoBundle 'sjl/gundo.vim'
 NeoBundle 'tpope/vim-abolish'
 NeoBundle 'tpope/vim-commentary'
@@ -58,7 +70,7 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-speeddating'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-unimpaired'
-NeoBundle 'Valloric/YouCompleteMe'
+" NeoBundle 'Valloric/YouCompleteMe'
 NeoBundle 'vim-ruby/vim-ruby'
 NeoBundle 'vim-scripts/a.vim'
 
@@ -105,9 +117,10 @@ set nrformats=                  " All numerals treated as decimal
 set listchars=tab:▸\ ,eol:¬     " Use TextMate tab and EOL symbols
 set backspace=eol,start,indent  " Configure Backspace to work correctly
 set whichwrap+=b,s,<,>,h,l,[,]  " Wrap around line beginnings/endings
+set omnifunc=syntaxcomplete#Complete
 
 syntax enable                   " Enable syntax highlighting
-colorscheme night_springs             " Set color scheme
+colorscheme solarized           " Set color scheme
 if has("gui_running")           " Set GUI specific options
   set guifont=Inconsolata:h13   " Set font
   set guioptions-=rL            " Remove scrollbars
@@ -156,8 +169,8 @@ if has("autocmd")
   autocmd Filetype make setlocal ts=2 sts=2 sw=2 noet
   autocmd Filetype python setlocal ts=4 sts=4 sw=4 et
   autocmd Filetype ruby setlocal tw=80 ts=2 sts=2 sw=2 et
-  autocmd Filetype tex setlocal tw=72 spell makeprg=pdflatex\ -shell-escape\ %
-  autocmd Filetype text setlocal tw=72 fo+=a
+  autocmd Filetype tex setlocal spell makeprg=pdflatex\ %
+  autocmd Filetype text setlocal tw=72
   autocmd Filetype yaml setlocal ts=2 sts=2 sw=2 et
 endif
 
@@ -177,6 +190,9 @@ nnoremap <silent> <leader>coo :call g:ColorColumnToggle()<CR>
 " Dismiss quickfix and location lists
 nnoremap <silent> <leader>- :cclose<CR>:lclose<CR>
 nnoremap <silent> <leader>= :copen<CR>
+
+" Toggle word wrap
+nnoremap <leader>ww :call ToggleWordWrap()<CR>
 
 " Use very magic regex by default
 nnoremap / /\v
@@ -205,7 +221,7 @@ cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
 
 " Remove highlighted search matches
-nnoremap <silent> <C-[> :noh<CR><C-[>
+" nnoremap <silent> <C-[> :noh<CR><C-[>
 
 " Display word count for buffer
 nmap <leader>wc :%s/\v\w+//gn<CR><C-[>
@@ -254,6 +270,12 @@ noremap <leader>` :tabclose<CR>
 map <leader>bp :lcd %% \| mak<CR>
 map <leader>bb :ProjectRootCD<CR>:mak<CR>
 map <leader>bc :ProjectRootCD<CR>:mak clean<CR>
+map <leader>br :ProjectRootCD<CR>:mak<CR>:!%%%:r<CR>
+
+noremap <buffer> <silent> k gk
+noremap <buffer> <silent> j gj
+noremap <buffer> <silent> 0 g0
+noremap <buffer> <silent> $ g$
 
 " ------------------------------------------------------------------- }}
 " Plugin options ---------------------------------------------------- {{
@@ -299,10 +321,13 @@ nnoremap <silent> <leader>se :Errors<CR>
 " let g:UltiSnipsExpandTrigger="<tab>"
 
 " unite
-nnoremap <C-p> :Unite -start-insert file_rec<CR>
+nnoremap <C-p> :Unite -start-insert file_rec/async<CR>
+if executable('ag')
+  let g:unite_source_rec_async_command='ag --nocolor --nogroup -g ""'
+endif
 
 " vim-airline
-let g:airline_theme = 'bubblegum'
+let g:airline_theme = 'solarized'
 
 " vim-fugitive
 nnoremap <silent> <leader>gco :Gcommit<CR>
@@ -336,6 +361,14 @@ function! g:ColorColumnToggle()
     setlocal colorcolumn&
   else
     setlocal colorcolumn=+1
+  endif
+endfunction
+
+function! ToggleWordWrap()
+  if &formatoptions =~ 'a'
+    setlocal formatoptions-=a
+  else
+    setlocal formatoptions+=a
   endif
 endfunction
 
