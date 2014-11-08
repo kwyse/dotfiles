@@ -40,7 +40,7 @@ NeoBundle 'honza/vim-snippets'
 NeoBundle 'kana/vim-textobj-entire'
 NeoBundle 'kana/vim-textobj-lastpat'
 NeoBundle 'kana/vim-textobj-user'
-NeoBundle 'lervag/vim-latex'
+" NeoBundle 'lervag/vim-latex'
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'mattn/emmet-vim'
 NeoBundle 'mhinz/vim-signify'
@@ -271,6 +271,11 @@ map <leader>bp :lcd %% \| mak<CR>
 map <leader>bb :ProjectRootCD<CR>:mak<CR>
 map <leader>bc :ProjectRootCD<CR>:mak clean<CR>
 map <leader>br :ProjectRootCD<CR>:mak<CR>:!%%%:r<CR>
+
+noremap <buffer> <silent> k gk
+noremap <buffer> <silent> j gj
+noremap <buffer> <silent> 0 g0
+noremap <buffer> <silent> $ g$
 
 " ------------------------------------------------------------------- }}
 " Plugin options ---------------------------------------------------- {{
