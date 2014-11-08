@@ -169,7 +169,7 @@ if has("autocmd")
   autocmd Filetype make setlocal ts=2 sts=2 sw=2 noet
   autocmd Filetype python setlocal ts=4 sts=4 sw=4 et
   autocmd Filetype ruby setlocal tw=80 ts=2 sts=2 sw=2 et
-  autocmd Filetype tex setlocal spell makeprg=latex\ %
+  autocmd Filetype tex setlocal spell makeprg=pdflatex\ %
   autocmd Filetype text setlocal tw=72
   autocmd Filetype yaml setlocal ts=2 sts=2 sw=2 et
 endif
@@ -270,6 +270,7 @@ noremap <leader>` :tabclose<CR>
 map <leader>bp :lcd %% \| mak<CR>
 map <leader>bb :ProjectRootCD<CR>:mak<CR>
 map <leader>bc :ProjectRootCD<CR>:mak clean<CR>
+map <leader>br :ProjectRootCD<CR>:mak<CR>:!%%%:r<CR>
 
 " ------------------------------------------------------------------- }}
 " Plugin options ---------------------------------------------------- {{
