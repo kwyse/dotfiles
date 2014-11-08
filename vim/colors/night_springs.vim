@@ -51,7 +51,7 @@ hi  Float               ctermfg=013   ctermbg=NONE  cterm=NONE
 hi  Operator            ctermfg=002   ctermbg=NONE  cterm=NONE
 hi  Exception           ctermfg=002   ctermbg=NONE  cterm=NONE
 hi  Keyword             ctermfg=014   ctermbg=NONE  cterm=NONE
-hi  Visual              ctermfg=NONE  ctermbg=008   cterm=NONE
+hi  Visual              ctermfg=000   ctermbg=010   cterm=NONE
 hi  PmenuSel            ctermfg=NONE  ctermbg=008   cterm=NONE
 hi  IncSearch           ctermfg=000   ctermbg=010   cterm=NONE
 hi  PreCondit           ctermfg=014   ctermbg=NONE  cterm=BOLD

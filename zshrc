@@ -161,10 +161,9 @@ alias ....='cd ../../..'
 alias .....='cd ../../../..'
 
 # Directory listings
-alias ls='ls -GFh'
-alias ll='ls -GFhl'
+alias ll='ls -l'
 alias lh='ls -d .*'
-alias lla='ls -aFGhl'
+alias lla='ll -a'
 alias tree="ls -R | grep ":$" | sed -e 's/:$//' -e \
   's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'"
 
@@ -287,7 +286,8 @@ bindkey -v      # Enable vi key bindings
 # ======================================================================
 
 # ZSH syntax highlighting
-source $HOME/.zplugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $HOME/.zsh-syntax-highlighting.zsh
+# source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # ------------------------------------------------------------------- }}
 # Helper functions -------------------------------------------------- {{
