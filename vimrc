@@ -24,9 +24,10 @@ if has('vim_starting')
   set nocompatible
   set runtimepath+=~/.vim/bundle/neobundle.vim/
 endif
-call neobundle#rc(expand('~/.vim/bundle/'))
 
+call neobundle#begin(expand('~/.vim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
+
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'ap/vim-css-color'
 NeoBundle 'bling/vim-airline'
@@ -73,6 +74,7 @@ NeoBundle 'tpope/vim-unimpaired'
 " NeoBundle 'Valloric/YouCompleteMe'
 NeoBundle 'vim-ruby/vim-ruby'
 NeoBundle 'vim-scripts/a.vim'
+call neobundle#end()
 
 " Vim distribution plugins
 runtime macros/matchit.vim      " Enable matchit.vim

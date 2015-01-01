@@ -1,0 +1,6 @@
+(source melpa)
+(source gnu)
+
+(depends-on "linum-relative")
+(depends-on "solarized-theme")
+(depends-on "auctex")
