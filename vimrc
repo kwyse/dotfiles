@@ -41,7 +41,8 @@ NeoBundle 'honza/vim-snippets'
 NeoBundle 'kana/vim-textobj-entire'
 NeoBundle 'kana/vim-textobj-lastpat'
 NeoBundle 'kana/vim-textobj-user'
-" NeoBundle 'lervag/vim-latex'
+NeoBundle 'LaTeX-Box-Team/LaTeX-Box'
+NeoBundle 'lervag/vim-latex'
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'mattn/emmet-vim'
 NeoBundle 'mhinz/vim-signify'
@@ -53,6 +54,7 @@ NeoBundle 'nelstrom/vim-visual-star-search'
 NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'scrooloose/syntastic'
+NeoBundle 'Shougo/neocomplete.vim'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimproc.vim', {
       \   'build' : {
@@ -62,7 +64,7 @@ NeoBundle 'Shougo/vimproc.vim', {
       \     'unix'    : 'make -f make_unix.mak'
       \   },
       \ }
-" NeoBundle 'SirVer/ultisnips'
+NeoBundle 'SirVer/ultisnips'
 NeoBundle 'sjl/gundo.vim'
 NeoBundle 'tpope/vim-abolish'
 NeoBundle 'tpope/vim-commentary'
@@ -295,6 +297,16 @@ nnoremap <silent> <leader>aa :A<CR>
 " gundo
 nnoremap <leader>gun :GundoToggle<CR>
 
+" neocomplete
+let g:acp_enableAtStartup = 0
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#enable_smart_case = 1
+let g:neocomplete#enable_auto_select = 0
+let g:neocomplete#disable_auto_complete = 1
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+inoremap <expr><Tab> pumvisible() ? "\<Tab>" : neocomplete#start_manual_complete()
+
 " nerdcommenter
 let NERDSpaceDelims=1
 
@@ -320,7 +332,9 @@ let g:syntastic_cpp_compiler = 'clang++'
 nnoremap <silent> <leader>se :Errors<CR>
 
 " ultisnips
-" let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 " unite
 nnoremap <C-p> :Unite -start-insert file_rec/async<CR>
@@ -335,6 +349,14 @@ let g:airline_theme = 'solarized'
 nnoremap <silent> <leader>gco :Gcommit<CR>
 nnoremap <silent> <leader>gph :Git push<CR>
 nnoremap <silent> <leader>gst :Gstatus<CR>
+
+" vim-latex
+let g:latex_view_general_viewer = 'open'
+let g:latex_fold_enabled = 0
+let g:latex_complete_patterns = {
+    \ 'ref' : '\C\\v\?\(eq\|page\|[cC]\)\?autoref\*\?\_\s*{[^{}]*',
+    \ 'bib' : '\C\\\a*parencite\a*\*\?\(\[[^\]]*\]\)*\_\s*{[^{}]*',
+    \ }
 
 " vim-unimpaired
 vmap [e [egv
