@@ -124,8 +124,8 @@ BASE16_SHELL="$HOME/.config/base16-shell/base16-atelierforest.dark.sh"
 
 # -- Helper functions -------------------------------------------------
 # ---------------------------------------------------------------------
-GIT_PROMPT_AHEAD="%F{135} (NUM+)%f"
-GIT_PROMPT_BEHIND="%F{057} (NUM-)%f"
+GIT_PROMPT_AHEAD="%F{135}NUM+ %f"
+GIT_PROMPT_BEHIND="%F{057}NUM- %f"
 GIT_PROMPT_UNTRACKED="%F{197}■%f"
 GIT_PROMPT_MODIFIED="%F{142}■%f"
 GIT_PROMPT_STAGED="%F{034}■%f"

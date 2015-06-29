@@ -18,9 +18,11 @@ call plug#begin('~/.vim/plugged')
 Plug 'kana/vim-textobj-entire'
 Plug 'kana/vim-textobj-user'
 Plug 'ntpeters/vim-better-whitespace'
+Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-unimpaired'
 call plug#end()
+let g:base16colorspace=256
 
 " -- Options ----------------------------------------------------------
 " ---------------------------------------------------------------------
@@ -36,7 +38,7 @@ set spelllang=en_gb,en_us       " Set spell checker language preferences
 set noswapfile                  " Prevent swapfile clutter
 set background=dark             " Adjust colors for a dark background
 
-colorscheme molokai
+colorscheme base16-atelierforest
 
 if has("autocmd")
   autocmd! BufWritePost .vimrc source $MYVIMRC " Re-source vimrc on save
