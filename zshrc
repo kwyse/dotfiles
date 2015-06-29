@@ -6,7 +6,7 @@
 # This is my personal zshrc file. It expects to find the
 # zsh-syntax-highlighting.zsh plugin in $HOME. You can symlink the
 # plugin location to $HOME or change the source path in this file.
-# Additional aliases are sources via a .aliases file also located in
+# Additional aliases are sourced via a .aliases file also located in
 # $HOME. This file can contain aliases tailored to the environment.
 #
 # Contents:
