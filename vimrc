@@ -36,8 +36,11 @@ set noerrorbells novisualbell   " Disable error beeping
 set hidden                      " Hide buffers when unloading them
 set spelllang=en_gb,en_us       " Set spell checker language preferences
 set noswapfile                  " Prevent swapfile clutter
-set background=dark             " Adjust colors for a dark background
 
+" Default to 2-space indentation
+set tabstop=2 shiftwidth=2 expandtab
+
+set background=dark
 colorscheme base16-atelierforest
 
 if has("autocmd")
