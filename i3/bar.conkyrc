@@ -9,7 +9,7 @@ TEXT
 
 [\
 
-{ #CPU
+{ # CPU
   "full_text":"CPU",
   "color":"\#00C1FF",
   "separator":false,
@@ -26,7 +26,7 @@ TEXT
   "separator_block_width":0
 },
 
-{ #RAM
+{ # RAM
   "full_text":"RAM",
   "color":"\#00C1FF",
   "separator":false,
