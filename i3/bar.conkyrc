@@ -1,0 +1,126 @@
+out_to_x no
+out_to_console yes
+update_interval 1
+
+use_spacer left
+pad_percents 2
+
+TEXT
+
+[\
+
+{ #CPU
+  "full_text":"CPU",
+  "color":"\#00C1FF",
+  "separator":false,
+  "separator_block_width":6
+}, {
+  "full_text":"${if_match ${cpu cpu0}<=90}${cpu cpu0}%    ${endif}",
+  "color":"\#EEEEEE",
+  "separator":false,
+  "separator_block_width":0
+}, {
+  "full_text":"${if_match ${cpu cpu0}>90}${cpu cpu0}%    ${endif}",
+  "color":"\#FC0A26",
+  "separator":false,
+  "separator_block_width":0
+},
+
+{ #RAM
+  "full_text":"RAM",
+  "color":"\#00C1FF",
+  "separator":false,
+  "separator_block_width":6
+}, {
+  "full_text":"${if_match ${memperc}<=75}${memperc}%    ${endif}",
+  "color":"\#EEEEEE",
+  "separator":false,
+  "separator_block_width":0
+}, {
+  "full_text":"${if_match ${memperc}>75}${memperc}%    ${endif}",
+  "color":"\#FC0A26",
+  "separator":false,
+  "separator_block_width":0
+},
+
+{ # Battery
+  "full_text":"${if_match ${battery_percent BAT0}>0}BAT${endif}",
+  "color":"\#00C1FF",
+  "separator":false,
+  "separator_block_width":6
+}, {
+  "full_text":"${if_match ${battery_percent BAT0}<1}"
+}, {
+  "full_text":"${else}"
+}, {
+  "full_text":"${if_match ${battery_percent BAT0}<20}${battery_percent BAT0}%    ",
+  "color":"\#FC0A26",
+  "separator":false,
+  "separator_block_width":6
+}, {
+  "full_text":"${else}"
+}, {
+  "full_text":"${if_match ${batter_percent BAT0}>=20}${battery_percent BAT0}%    ",
+  "color":"\#EEEEEE",
+  "separator":false,
+  "separator_block_width":0
+}, {
+  "full_text":"${else}"
+}, {
+  "full_text":"${endif}${endif}${endif}"
+},
+
+{ # Volume
+  "full_text":"VOL",
+  "color":"\#00C1FF",
+  "separator":false,
+  "separator_block_width":6
+}, {
+  "full_text":"${exec $HOME/.config/i3/volume.sh}    ",
+  "color":"\#EEEEEE",
+  "separator":false,
+  "separator_block_width":0
+},
+
+{ # Date and time
+  "full_text":"${time %d}",
+  "color":"\#DDDDDD",
+  "separator":false,
+  "separator_block_width":0
+}, {
+  "full_text":"/",
+  "color":"\#00A5FF",
+  "separator":false,
+  "separator_block_width":0
+}, {
+  "full_text":"${time %m}",
+  "color":"\#DDDDDD",
+  "separator":false,
+  "separator_block_width":0
+}, {
+  "full_text":"/",
+  "color":"\#00A5FF",
+  "separator":false,
+  "separator_block_width":0
+}, {
+  "full_text":"${time %y} ",
+  "color":"\#DDDDDD",
+  "separator":false,
+  "separator_block_width":6
+}, {
+  "full_text":"${time %H}",
+  "color":"\#DDDDDD",
+  "separator":false,
+  "separator_block_width":0
+}, {
+  "full_text":":",
+  "color":"\#00A5FF",
+  "separator":false,
+  "separator_block_width":0},\
+{
+  "full_text":"${time %M} ",
+  "color":"\#DDDDDD",
+  "separator":false
+}
+
+],
