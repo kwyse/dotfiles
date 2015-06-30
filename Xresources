@@ -1,0 +1,8 @@
+URxvt.font: xft:Inconsolata:bold:pixelsize=14:antialias=true:hinting=true
+URxvt.boldFont: xft:Inconsolata:bold:pixelsize=14:antialias=true:hinting=true
+URxvt.scrollBar: false
+URxvt.transparent: true
+URxvt.shading: 30
+
+! Box-specific color scheme
+#include ".xtheme"
