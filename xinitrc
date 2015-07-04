@@ -1,5 +1,4 @@
-setxkbmap gb &
-setxkbmap -option "ctrl:swapcaps" &
+xrdb -merge ~/.Xresources &
+setxkbmap gb -option "ctrl:swapcaps" &
 sh ~/.fehbg &
-xrdb -merge ~/.Xresources
 exec i3
