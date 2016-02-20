@@ -37,11 +37,9 @@ let g:base16colorspace=256
 
 " -- Options ----------------------------------------------------------
 " ---------------------------------------------------------------------
-set nocompatible                " Disable vi compatibility
 set number relativenumber       " Enable line numbering
 set ignorecase smartcase        " Case-sensitive search if capitals included
 set infercase                   " Ignore case when autocompleting
-set hlsearch                    " Enable highlighting on searches
 set showmatch                   " Show matching brace briefly when inserting
 set noerrorbells novisualbell   " Disable error beeping
 set hidden                      " Hide buffers when unloading them
@@ -52,7 +50,7 @@ set noswapfile                  " Prevent swapfile clutter
 set tabstop=2 shiftwidth=2 expandtab
 
 set background=dark
-colorscheme base16-atelierforest
+colorscheme base16-flat
 
 if has("autocmd")
   autocmd! BufWritePost .vimrc source $MYVIMRC " Re-source vimrc on save
@@ -60,17 +58,6 @@ endif
 
 " -- Key bindings -----------------------------------------------------
 " ---------------------------------------------------------------------
-function! ToggleWordWrap()
-  if &formatoptions =~ 'a'
-    setlocal formatoptions-=a
-    echo "Paragraph auto-formatting disabled"
-  else
-    setlocal formatoptions+=a
-    echo "Paragraph auto-formatting enabled"
-  endif
-endfunction
-nnoremap <leader>ww :call ToggleWordWrap()<CR>
-
 " Use very magic regex by default
 nnoremap / /\v
 vnoremap / /\v

@@ -57,11 +57,11 @@ setopt share_history            # Active history read/write
 # -- Prompt -----------------------------------------------------------
 # ---------------------------------------------------------------------
 PROMPT='
-[%(!.%F{196%}%n%f.%F{034%}%n%f) at \
-%F{069%}%m%f] \
-%F{136%}%~%f \
+[%(!.%F{red%}%n%f.%F{green%}%n%f) at \
+%F{blue%}%m%f] \
+%F{yellow%}%~%f \
 $(git_prompt_string)
-%F{069%}$%f '
+%F{blue%}$%f '
 
 # -- Aliases ----------------------------------------------------------
 # ---------------------------------------------------------------------
@@ -114,12 +114,12 @@ bindkey "^N"    history-search-forward
 
 # -- Plugins ----------------------------------------------------------
 # ---------------------------------------------------------------------
-source $HOME/.zsh-syntax-highlighting.zsh
+# source $HOME/.zsh-syntax-highlighting.zsh
 
 # -- Misc. initializers -------------------------------------------------
 # ---------------------------------------------------------------------
 # Base16 Shell
-BASE16_SHELL="$HOME/.config/base16-shell/base16-atelierforest.dark.sh"
+BASE16_SHELL="$HOME/.config/base16-flat.dark.sh"
 [[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
 
 # -- Helper functions -------------------------------------------------
