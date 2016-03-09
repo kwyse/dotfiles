@@ -12,7 +12,7 @@
 # -- Settings ---------------------------------------------------------
 # ---------------------------------------------------------------------
 
-set $mod Mod1
+set $mod Mod4
 font pango: FontAwesome, Ionicons, Inconsolata, Terminus Bold 12
 
 floating_modifier $mod
@@ -22,7 +22,6 @@ floating_modifier $mod
 bar {
   status_command i3blocks
   position top
-  separator_symbol " "
 }
 
 # -- Key bindings -----------------------------------------------------

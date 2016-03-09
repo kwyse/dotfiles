@@ -31,6 +31,7 @@ Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-markdown'
 Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 call plug#end()
 let g:base16colorspace=256
@@ -102,3 +103,6 @@ noremap <buffer> <silent> $ g$
 
 " ---------------------------------------------------------------------
 " ---------------------------------------------------------------------
+
+let g:ycm_global_ycm_extra_conf = '~/.vim/config/.ycm_extra_conf.py'
+let g:ycm_filetype_whitelist = { 'c': 1, 'cpp': 1, 'python': 1 }

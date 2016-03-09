@@ -16,6 +16,12 @@
 	       '("gnu" . "http://elpa.gnu.org/packages/")))
 (package-initialize)
 
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+(eval-when-compile (require 'use-package))
+
 ; Configuration
 (menu-bar-mode 0)
 (tool-bar-mode 0)
@@ -46,9 +52,22 @@
   :config
   (global-set-key (kbd "M-x") 'helm-M-x)
   (helm-mode 1))
-(use-package company)
+(use-package company
+  :config
+  (add-hook 'c-mode-hook 'company-mode-on)
+  (add-hook 'c++-mode-hook 'company-mode-on))
+(use-package company-quickhelp
+  :config
+  (add-hook 'c-mode-hook 'company-quickhelp-mode t)
+  (add-hook 'rust-mode-hook 'company-quickhelp-mode t))
+(use-package company-c-headers
+  :config
+  (add-to-list 'company-backends 'company-c-headers))
+;  (add-to-list 'company-c-headers-path-system (getenv "CPP_VERSION")))
+(use-package company-irony :defer t)
 (use-package company-racer)
 (use-package racer
+
   :config
   (setq racer-cmd (getenv "RACER_BIN_PATH")
 	racer-rust-src-path (getenv "RUST_SRC_PATH")))
@@ -67,17 +86,33 @@
   (add-hook 'rust-mode-hook #'racer-mode)
   (add-hook 'racer-mode-hook #'eldoc-mode)
   (add-hook 'racer-mode-hook #'company-mode)
+  (add-hook 'rust-mode-hook #'company-quickhelp-mode t)
   (global-set-key (kbd "TAB") #'company-indent-or-complete-common)
   (setq company-tooltip-align-annotations t))
 (use-package geiser)
 (use-package magit
   :config
   (global-set-key (kbd "C-x g") 'magit-status))
+(use-package irony
+  :defer t
+  :init
+  (add-hook 'c-mode-hook 'irony-mode)
+  (add-hook 'c++-mode-hook 'irony-mode)
+  :config
+  (defun my-irony-mode-hook ()
+    (define-key irony-mode-map [remap completion-at-point]
+      'irony-completion-at-point-async)
+    (define-key irony-mode-map [remap complete-symbol]
+      'irony-completion-at-point-async))
+  (add-hook 'irony-mode-hook 'my-irony-mode-hook)
+  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
 (use-package base16-theme
   :init
   (load-theme 'base16-flat-dark t))
 
 (add-hook 'java-mode-hook 'subword-mode)
+(setq gdb-many-windows t
+      gdb-show-main t)
 
 (provide 'init)
 ;;; init.el ends here
