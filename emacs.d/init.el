@@ -29,7 +29,7 @@
 (column-number-mode t)
 (setq version-control t)
 (setq backup-directory-alist `((".*" . "~/.backups/emacs/")))
-(auto-save-mode 0)
+(auto-save-mode -1)
 
 (setq inhibit-startup-message t
       inhibit-startup-echo-area-message t)
@@ -106,6 +106,7 @@
       'irony-completion-at-point-async))
   (add-hook 'irony-mode-hook 'my-irony-mode-hook)
   (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
+(use-package evil)
 (use-package base16-theme
   :init
   (load-theme 'base16-flat-dark t))
