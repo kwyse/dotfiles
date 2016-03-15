@@ -106,7 +106,10 @@
       'irony-completion-at-point-async))
   (add-hook 'irony-mode-hook 'my-irony-mode-hook)
   (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
-(use-package evil)
+(use-package evil
+  :config
+  (evil-mode t)
+  (define-key evil-normal-state-map (kbd "C-u") 'evil-scroll-up))
 (use-package base16-theme
   :init
   (load-theme 'base16-flat-dark t))
