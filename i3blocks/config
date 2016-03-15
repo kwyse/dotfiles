@@ -1,0 +1,12 @@
+interval=1
+color=#E1E1E1
+command=$HOME/.config/i3blocks/$BLOCK_NAME.sh
+align=left
+
+[battery]
+
+[volume]
+min_width=28
+
+[time]
+command=date +%T
