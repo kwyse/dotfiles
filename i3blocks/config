@@ -8,5 +8,6 @@ align=left
 [volume]
 min_width=28
 
+
 [time]
 command=date +%T
