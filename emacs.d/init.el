@@ -110,9 +110,15 @@
   :config
   (evil-mode t)
   (define-key evil-normal-state-map (kbd "C-u") 'evil-scroll-up))
+(use-package evil-commentary
+  :config
+  (evil-commentary-mode t))
 (use-package base16-theme
   :init
   (load-theme 'base16-flat-dark t))
+
+(setq c-basic-style "k&r"
+      c-basic-offset 4)
 
 (add-hook 'java-mode-hook 'subword-mode)
 (setq gdb-many-windows t
