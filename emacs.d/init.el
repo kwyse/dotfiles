@@ -78,7 +78,9 @@
 (use-package flycheck
   :config
   (global-flycheck-mode))
-(use-package flycheck-rust)
+(use-package flycheck-rust
+  :config
+  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 (use-package rust-mode
   :config
   (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
@@ -89,6 +91,9 @@
   (add-hook 'rust-mode-hook #'company-quickhelp-mode t)
   (global-set-key (kbd "TAB") #'company-indent-or-complete-common)
   (setq company-tooltip-align-annotations t))
+(use-package cargo
+  :init
+  (add-hook 'rust-mode-hook 'cargo-minor-mode))
 (use-package geiser)
 (use-package magit
   :config
@@ -116,6 +121,24 @@
 (use-package base16-theme
   :init
   (load-theme 'base16-flat-dark t))
+(use-package projectile
+  :init
+  (projectile-global-mode))
+(use-package helm-projectile
+  :init
+  (helm-projectile-on))
+(use-package markdown-mode
+  :config
+  (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode)))
+
+(use-package web-mode
+  :config
+  (add-to-list 'auto-mode-alist '("\\.hbs\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.scss\\'" . web-mode))
+  (setq-default indent-tabs-mode nil)
+  (setq web-mode-markup-indent-offset 2
+        web-mode-css-indent-offset 2
+        web-mode-code-indent-offset 2))
 
 (setq c-basic-style "k&r"
       c-basic-offset 4)
