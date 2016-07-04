@@ -9,7 +9,7 @@ export HISTFILE=~/.zhistory
 
 export EDITOR=vim
 export VISUAL=$EDITOR
-export PATH=$HOME/bin:$PATH
+export PATH=$HOME/bin:$HOME/.cargo/bin:$PATH
 
 export RUST_SRC_PATH="/usr/local/repo/rust/src"
 export RACER_BIN_PATH="/usr/local/bin/racer"
