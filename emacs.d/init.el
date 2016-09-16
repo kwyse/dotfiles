@@ -40,6 +40,8 @@
 (add-to-list 'default-frame-alist '(font . "Inconsolata-11:bold"))
 (add-to-list 'default-frame-alist '(alpha 95 50))
 
+(setq exec-path (append exec-path '("/Users/krishanwyse/.cargo/bin")))
+
 ; Packages
 (setq use-package-always-ensure t)
 (use-package hlinum)
@@ -120,7 +122,7 @@
   (evil-commentary-mode t))
 (use-package base16-theme
   :init
-  (load-theme 'base16-flat-dark t))
+  (load-theme 'base16-flat t))
 (use-package projectile
   :init
   (projectile-global-mode))
