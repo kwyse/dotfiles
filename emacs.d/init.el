@@ -44,6 +44,8 @@
 
 ; Packages
 (setq use-package-always-ensure t)
+
+; Common packages
 (use-package hlinum)
 (use-package linum-relative
   :config
@@ -51,60 +53,52 @@
   (setq linum-relative-format " %2s ")
   (setq linum-relative-current-symbol ""))
 (use-package helm
-  :config
-  (global-set-key (kbd "M-x") 'helm-M-x)
-  (helm-mode 1))
+  :bind ("M-x" . helm-M-x))
 (use-package company
   :config
   (add-hook 'c-mode-hook 'company-mode-on)
-  (add-hook 'c++-mode-hook 'company-mode-on))
-(use-package company-quickhelp
-  :config
-  (add-hook 'c-mode-hook 'company-quickhelp-mode t)
-  (add-hook 'rust-mode-hook 'company-quickhelp-mode t))
-(use-package company-c-headers
-  :config
-  (add-to-list 'company-backends 'company-c-headers))
-;  (add-to-list 'company-c-headers-path-system (getenv "CPP_VERSION")))
-(use-package company-irony :defer t)
-(use-package company-racer)
-(use-package racer
-
-  :config
-  (setq racer-cmd (getenv "RACER_BIN_PATH")
-	racer-rust-src-path (getenv "RUST_SRC_PATH")))
-(use-package view
-  :config
-  (global-set-key "\C-v" 'View-scroll-half-page-forward)
-  (global-set-key "\M-v" 'View-scroll-half-page-backward))
+  (add-hook 'c++-mode-hook 'company-mode-on)
+  ;; (add-hook 'rust-mode-hook 'company-mode-on)
+  (use-package company-quickhelp
+    :config
+    (add-hook 'c-mode-hook 'company-quickhelp-mode 1)))
+    ;; (add-hook 'rust-mode-hook 'company-quickhelp-mode 1)))
 (use-package flycheck
   :config
-  (global-flycheck-mode))
-(use-package flycheck-rust
-  :config
-  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
-(use-package rust-mode
-  :config
-  (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
-  (add-hook 'racer-mode-hook #'company-mode)
-  (add-hook 'rust-mode-hook #'racer-mode)
-  (add-hook 'racer-mode-hook #'eldoc-mode)
-  (add-hook 'racer-mode-hook #'company-mode)
-  (add-hook 'rust-mode-hook #'company-quickhelp-mode t)
-  (global-set-key (kbd "TAB") #'company-indent-or-complete-common)
-  (setq company-tooltip-align-annotations t))
-(use-package cargo
-  :init
-  (add-hook 'rust-mode-hook 'cargo-minor-mode))
-(use-package geiser)
+  (add-hook 'c-mode-hook 'global-flycheck-mode)
+  (add-hook 'c++-mode-hook 'global-flycheck-mode)
+  (add-hook 'rust-mode-hook 'global-flycheck-mode))
 (use-package magit
+  :bind ("C-x g" . magit-status))
+(use-package evil
   :config
-  (global-set-key (kbd "C-x g") 'magit-status))
-(use-package irony
-  :defer t
+  (evil-mode t)
+  (define-key evil-normal-state-map (kbd "C-u") 'evil-scroll-up)
+  (use-package evil-commentary
+    :config
+    (evil-commentary-mode t)))
+(use-package base16-theme
   :init
-  (add-hook 'c-mode-hook 'irony-mode)
-  (add-hook 'c++-mode-hook 'irony-mode)
+  (load-theme 'base16-flat t))
+(use-package projectile
+  :init
+  (projectile-global-mode)
+  (use-package helm-projectile
+    :init
+    (helm-projectile-on)))
+(use-package golden-ratio
+  :config
+  (golden-ratio-mode 1))
+(use-package exec-path-from-shell)
+(when (memq window-system '(mac ns))
+  (exec-path-from-shell-initialize))
+
+; C packages
+(use-package irony
+  :mode ("\\.c\\'" . irony-mode)
+  :mode ("\\.h\\'" . irony-mode)
+  :mode ("\\.cpp\\'" . irony-mode)
+  :mode ("\\.hpp\\'" . irony-mode)
   :config
   (defun my-irony-mode-hook ()
     (define-key irony-mode-map [remap completion-at-point]
@@ -112,31 +106,43 @@
     (define-key irony-mode-map [remap complete-symbol]
       'irony-completion-at-point-async))
   (add-hook 'irony-mode-hook 'my-irony-mode-hook)
-  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options))
-(use-package evil
-  :config
-  (evil-mode t)
-  (define-key evil-normal-state-map (kbd "C-u") 'evil-scroll-up))
-(use-package evil-commentary
-  :config
-  (evil-commentary-mode t))
-(use-package base16-theme
-  :init
-  (load-theme 'base16-flat t))
-(use-package projectile
-  :init
-  (projectile-global-mode))
-(use-package helm-projectile
-  :init
-  (helm-projectile-on))
-(use-package markdown-mode
-  :config
-  (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode)))
+  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
+  (use-package company-irony)
+  (use-package company-c-headers
+    :config
+    ; (add-to-list 'company-c-headers-path-system (getenv "CPP_VERSION")))
+    (add-to-list 'company-backends 'company-c-headers)))
 
-(use-package web-mode
+; Rust packages
+(use-package rust-mode
+  :mode ("\\.rs\\'" . rust-mode)
   :config
-  (add-to-list 'auto-mode-alist '("\\.hbs\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.scss\\'" . web-mode))
+  (add-hook 'rust-mode-hook #'company-quickhelp-mode t)
+  (use-package cargo
+    :init
+    (add-hook 'rust-mode-hook 'cargo-minor-mode))
+  (use-package flycheck-rust
+    :config
+    (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
+  (use-package racer
+    :init
+    (setq racer-rust-src-path (getenv "RUST_SRC_PATH"))
+    (add-hook 'rust-mode-hook #'racer-mode)
+    (add-hook 'racer-mode-hook #'eldoc-mode)
+    (add-hook 'racer-mode-hook #'company-mode)
+    (company-quickhelp-mode 1)
+    (define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
+    (setq company-tooltip-align-annotations t
+          company-minimum-prefix-length 1
+          company-idle-delay 0.1)))
+
+; Other language packages
+(use-package markdown-mode
+  :mode ("\\.md\\'" . markdown-mode))
+(use-package web-mode
+  :mode ("\\.hbs\\'" . web-mode)
+  :mode ("\\.scss\\'" . web-mode)
+  :config
   (setq-default indent-tabs-mode nil)
   (setq web-mode-markup-indent-offset 2
         web-mode-css-indent-offset 2
