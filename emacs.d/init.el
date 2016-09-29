@@ -95,11 +95,13 @@
 
 ; C packages
 (use-package irony
-  :mode ("\\.c\\'" . irony-mode)
-  :mode ("\\.h\\'" . irony-mode)
-  :mode ("\\.cpp\\'" . irony-mode)
-  :mode ("\\.hpp\\'" . irony-mode)
+  :mode ("\\.c\\'" . c-mode)
+  :mode ("\\.h\\'" . c-mode)
+  :mode ("\\.cpp\\'" . c++-mode)
+  :mode ("\\.hpp\\'" . c++-mode)
   :config
+  (add-hook 'c-mode-hook 'irony-mode)
+  (add-hook 'c++-mode-hook 'irony-mode)
   (defun my-irony-mode-hook ()
     (define-key irony-mode-map [remap completion-at-point]
       'irony-completion-at-point-async)
@@ -107,11 +109,21 @@
       'irony-completion-at-point-async))
   (add-hook 'irony-mode-hook 'my-irony-mode-hook)
   (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
-  (use-package company-irony)
+  (company-mode)
+  (company-quickhelp-mode 1)
+  (setq company-tooltip-align-annotations t
+	company-minimum-prefix-length 1
+	company-idle-delay 0.1)
+  (use-package company-irony
+    :config
+    (add-to-list 'company-backend 'company-irony))
   (use-package company-c-headers
     :config
     ; (add-to-list 'company-c-headers-path-system (getenv "CPP_VERSION")))
-    (add-to-list 'company-backends 'company-c-headers)))
+    (add-to-list 'company-backends 'company-c-headers))
+  (use-package flycheck-irony
+    :config
+    '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup)))
 
 ; Rust packages
 (use-package rust-mode
