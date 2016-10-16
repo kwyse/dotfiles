@@ -93,15 +93,26 @@
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
 
+; Assembly packages
+(use-package nasm-mode
+  :mode ("\\.asm\\'" . nasm-mode)
+  :config
+  (setq nasm-basic-offset 4))
+
 ; C packages
 (use-package irony
   :mode ("\\.c\\'" . c-mode)
   :mode ("\\.h\\'" . c-mode)
   :mode ("\\.cpp\\'" . c++-mode)
   :mode ("\\.hpp\\'" . c++-mode)
+  :init
+  (defun flycheck-c-setup ()
+    (setq flycheck-gcc-language-standard "c11"
+          flycheck-clang-language-standard "c11"))
+  (add-hook 'c-mode-hook #'flycheck-c-setup)
   :config
-  (add-hook 'c-mode-hook 'irony-mode)
-  (add-hook 'c++-mode-hook 'irony-mode)
+  ; (add-hook 'c++-mode-hook 'irony-mode)
+  (irony-mode)
   (defun my-irony-mode-hook ()
     (define-key irony-mode-map [remap completion-at-point]
       'irony-completion-at-point-async)
