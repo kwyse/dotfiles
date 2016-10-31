@@ -3,4 +3,5 @@
 # Maintainer: Krishan Wyse <kwysek@gmail.com> -------------------------
 # ---------------------------------------------------------------------
 
-startx
+startx &
+~/.dropbox-dist/dropboxd

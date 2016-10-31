@@ -1,0 +1,6 @@
+[options]
+font = Inconsolata Bold 10
+allow_bold = false
+
+[colors]
+background = rgba(64, 64, 64, 0.8)

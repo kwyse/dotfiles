@@ -6,4 +6,4 @@ URxvt.shading: 30
 *faceName: xft:Inconsolata:pixelsize=11.5
 
 ! Box-specific color scheme
-#include ".oldxtheme"
+! #include ".oldxtheme"
