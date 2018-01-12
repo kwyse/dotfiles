@@ -33,3 +33,5 @@ export PATH=~/Library/Python/3.6/bin/:$PATH
 
 export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
 
+export DEIN_INSTALL_DIR="$HOME/.local/share/dein"
+export DOTFILES_DIR="$HOME/dotfiles"
