@@ -81,7 +81,7 @@ alias gd='git diff'
 alias gmn='git merge --no-ff '
 alias gph='git push '
 alias gpl='git pull '
-alias gst='git status '
+alias gst='git status -u'
 
 # Source box-specific aliases
 source $HOME/.aliases
