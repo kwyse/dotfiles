@@ -36,3 +36,7 @@ set number relativenumber
 set noswapfile
 set hidden
 set backspace=indent,eol,start
+
+set path+=**
+set wildmenu
+set wildmode=list:longest,full
