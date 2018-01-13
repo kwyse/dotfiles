@@ -15,8 +15,6 @@ export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="/Library/TeX/Root/bin/x86_64-darwin:$PATH"
 export LIBRARY_PATH="$LIBRARY_PATH:/usr/local/lib"
 
-export RUST_SRC_PATH="$HOME/.multirust/toolchains/nightly-x86_64-apple-darwin/lib/rustlib/src/rust/src"
-
 export ANT_HOME=/usr/local/opt/ant/libexec
 export MAVEN_HOME=/usr/local/opt/maven
 export GRADLE_HOME=/usr/local/opt/gradle
@@ -35,3 +33,5 @@ export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
 
 export DEIN_INSTALL_DIR="$HOME/.local/share/dein"
 export DOTFILES_DIR="$HOME/dotfiles"
+
+export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
