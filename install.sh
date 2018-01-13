@@ -60,5 +60,5 @@ if [[ -z ${RUST_SRC_PATH} ]]; then
 fi
 
 if [ ! -d "${RUST_SRC_PATH}" ]; then
-  rustup component add rust-src
+  rustup component add rls-preview rust-analysis rust-src
 fi

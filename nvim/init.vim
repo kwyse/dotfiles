@@ -6,6 +6,8 @@ if dein#load_state('~/.local/share/dein')
   call dein#begin('~/.local/share/dein')
 
   call dein#add('~/.local/share/dein/repos/github.com/Shougo/dein.vim')
+
+  call dein#add('autozimu/LanguageClient-neovim', { 'rev': 'next', 'build': 'bash install.sh' })
   call dein#add('junegunn/fzf')
   call dein#add('rust-lang/rust.vim')
 
