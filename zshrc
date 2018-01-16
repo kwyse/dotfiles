@@ -53,6 +53,7 @@ setopt hist_find_no_dups        # Only cycle through results twice
 setopt hist_reduce_blanks       # Remove extra blanks in commands
 setopt hist_verify              # Expand but do not execute history
 setopt share_history            # Active history read/write
+setopt ignoreeof                # Prevent shell exit with ^D
 
 # -- Prompt -----------------------------------------------------------
 # ---------------------------------------------------------------------
@@ -74,6 +75,7 @@ alias ....='cd ../../..'
 alias .....='cd ../../../..'
 
 alias ga='git add '
+alias gb='git branch'
 alias gch='git checkout '
 alias gcl='git clone '
 alias gco='git commit '
@@ -111,6 +113,7 @@ zstyle ':completion:*' use-cache on
 bindkey -v      # Enable vi key bindings
 bindkey "^P"    history-search-backward
 bindkey "^N"    history-search-forward
+bindkey "^R" 	history-incremental-search-backward
 
 # -- Plugins ----------------------------------------------------------
 # ---------------------------------------------------------------------
