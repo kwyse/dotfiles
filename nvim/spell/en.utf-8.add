@@ -14,3 +14,7 @@ workflows
 workflow
 startup
 blog
+zsh
+shortcuts
+tmux
+remappings

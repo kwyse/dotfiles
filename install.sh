@@ -19,10 +19,10 @@ if [[ -z ${install_command} ]]; then
   exit 1
 fi
 
-deps=(fzf)
+deps=(fzf tmux)
 
-for dep in deps; do
-  command -v fzf >/dev/null 2>&1 || `${install_command} fzf`
+for dep in $deps; do
+  command -v $dep >/dev/null 2>&1 || `${install_command} $dep`
 done
 
 if [[ -z ${DEIN_INSTALL_DIR} ]]; then

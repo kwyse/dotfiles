@@ -85,6 +85,8 @@ alias gph='git push '
 alias gpl='git pull '
 alias gst='git status -u'
 
+alias tmux='tmux -f ${XDG_CONFIG_HOME}/tmux.conf'
+
 # Source box-specific aliases
 source $HOME/.aliases
 
