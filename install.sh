@@ -25,22 +25,19 @@ for dep in $deps; do
   command -v $dep >/dev/null 2>&1 || `${install_command} $dep`
 done
 
-if [[ -z ${DEIN_INSTALL_DIR} ]]; then
-  echo "Dein install directory for Vim plugins is not set"
-  exit 1
-fi
-
 if [[ -z ${DOTFILES_DIR} ]]; then
   echo "Dotfiles directory is not set"
   exit 1
 fi
 
-if [ ! -d ${DEIN_INSTALL_DIR} ]; then
-  curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh -sSf | sh -s -- $DEIN_INSTALL_DIR >/dev/null 2>&1
-fi
 
 if [ ! -d ${XDG_CONFIG_HOME}/nvim ]; then
   ln -s ${DOTFILES_DIR}/nvim ${XDG_CONFIG_HOME}/nvim
+fi
+
+mkdir -p ${XDG_CONFIG_HOME}/nvim/pack/minpac/opt
+if [[ -z "$(ls -A ${XDG_CONFIG_HOME}/nvim/pack/minpac/opt)" ]]; then
+  git clone https://github.com/k-takata/minpac.git ${XDG_CONFIG_DIR}/nvim/pack/minpac/opt/minpac
 fi
 
 if [[ `command -v fzf >/dev/null 2>&1` ]]; then
