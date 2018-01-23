@@ -8,9 +8,13 @@ if exists('*minpac#init')
   call minpac#add('k-takata/minpac', {'type': 'opt'})
 
   call minpac#add('autozimu/LanguageClient-neovim', {'do': '!bash install.sh'})
+  call minpac#add('octol/vim-cpp-enhanced-highlight')
   call minpac#add('rakr/vim-one')
+  call minpac#add('radenling/vim-dispatch-neovim')
   call minpac#add('rust-lang/rust.vim')
   call minpac#add('tpope/vim-commentary')
+  call minpac#add('tpope/vim-dispatch')
+  call minpac#add('tpope/vim-unimpaired')
 endif
 
 filetype plugin indent on
