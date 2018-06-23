@@ -29,6 +29,7 @@ export PATH=$ANDROID_HOME/platform-tools:$PATH
 export PATH=$ANDROID_HOME/build-tools/$(ls -tr $ANDROID_HOME/build-tools/ | tail -1):$PATH
 export PATH=~/Library/Python/3.6/bin/:$PATH
 export PATH=/usr/local/bin/:$PATH
+export PATH=$GOPATH/bin:$PATH
 
 export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
 
@@ -40,3 +41,6 @@ export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 if [[ -z ${XDG_CONFIG_HOME} ]]; then
   export XDG_CONFIG_HOME=$HOME/.config
 fi
+
+export GOPATH="$HOME/projects/go"
+export JAVA_HOME=$(/usr/libexec/java_home)

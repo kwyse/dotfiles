@@ -15,6 +15,7 @@ if exists('*minpac#init')
   call minpac#add('tpope/vim-commentary')
   call minpac#add('tpope/vim-dispatch')
   call minpac#add('tpope/vim-unimpaired')
+  call minpac#add('w0rp/ale')
 endif
 
 filetype plugin indent on
