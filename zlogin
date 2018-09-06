@@ -3,5 +3,7 @@
 # Maintainer: Krishan Wyse <kwysek@gmail.com> -------------------------
 # ---------------------------------------------------------------------
 
-startx &
-~/.dropbox-dist/dropboxd
+if [ "$(uname -s)" = "Linux" ]; then
+  startx &
+  ~/.dropbox-dist/dropboxd
+fi
