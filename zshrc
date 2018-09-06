@@ -68,6 +68,7 @@ $(git_prompt_string)
 alias ll='ls -l'
 alias lh='ls -d .*'
 alias lla='ll -a'
+alias ed='$EDITOR'
 
 alias ...='cd ../..'
 alias ....='cd ../../..'
