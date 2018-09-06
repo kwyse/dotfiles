@@ -65,6 +65,10 @@ $(git_prompt_string)
 
 # -- Aliases ----------------------------------------------------------
 # ---------------------------------------------------------------------
+if [ "$(uname -s)" = "Darwin" ]; then
+  alias ls='ls -G'
+fi
+
 alias ll='ls -l'
 alias lh='ls -d .*'
 alias lla='ll -a'
