@@ -5,6 +5,7 @@ vim/bundle
 vim/colors
 vim/plugged
 vim/spell/en.utf-8.add.spl
+nvim/.netrwhist
 emacs.d/auto-save-list
 emacs.d/elpa
 \#*
