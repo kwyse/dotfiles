@@ -1,0 +1,6 @@
+Host netherfold
+  AddKeysToAgent no
+  IdentityFile ~/.ssh/%r@%h
+Host github.com
+  AddKeysToAgent no
+  IdentityFile ~/.ssh/kwyse@github
