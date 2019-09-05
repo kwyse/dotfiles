@@ -12,3 +12,11 @@
 
 (use-package cargo
   :hook (rust-mode . cargo-minor-mode))
+
+(global-display-line-numbers-mode)
+(setq display-line-numbers-type 'relative)
+(menu-bar-no-scroll-bar)
+(column-number-mode)
+(tool-bar-mode 0)
+
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
