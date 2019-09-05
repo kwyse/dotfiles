@@ -14,27 +14,27 @@
 "
 " -- Plugins ----------------------------------------------------------
 " ---------------------------------------------------------------------
-call plug#begin('~/.vim/plugged')
-Plug 'chriskempson/base16-vim'
-Plug 'itchyny/lightline.vim'
-Plug 'junegunn/goyo.vim'
-Plug 'junegunn/limelight.vim'
-Plug 'kana/vim-textobj-entire'
-Plug 'kana/vim-textobj-user'
-Plug 'ntpeters/vim-better-whitespace'
-Plug 'reedes/vim-pencil'
-Plug 'reedes/vim-lexical'
-Plug 'reedes/vim-litecorrect'
-Plug 'reedes/vim-textobj-sentence'
-Plug 'rust-lang/rust.vim'
-Plug 'tpope/vim-abolish'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-markdown'
-Plug 'tpope/vim-sensible'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-unimpaired'
-call plug#end()
-let g:base16colorspace=256
+" call plug#begin('~/.vim/plugged')
+" Plug 'chriskempson/base16-vim'
+" Plug 'itchyny/lightline.vim'
+" Plug 'junegunn/goyo.vim'
+" Plug 'junegunn/limelight.vim'
+" Plug 'kana/vim-textobj-entire'
+" Plug 'kana/vim-textobj-user'
+" Plug 'ntpeters/vim-better-whitespace'
+" Plug 'reedes/vim-pencil'
+" Plug 'reedes/vim-lexical'
+" Plug 'reedes/vim-litecorrect'
+" Plug 'reedes/vim-textobj-sentence'
+" Plug 'rust-lang/rust.vim'
+" Plug 'tpope/vim-abolish'
+" Plug 'tpope/vim-commentary'
+" Plug 'tpope/vim-markdown'
+" Plug 'tpope/vim-sensible'
+" Plug 'tpope/vim-surround'
+" Plug 'tpope/vim-unimpaired'
+" call plug#end()
+" let g:base16colorspace=256
 
 " -- Options ----------------------------------------------------------
 " ---------------------------------------------------------------------
@@ -53,7 +53,7 @@ set noswapfile                  " Prevent swapfile clutter
 set tabstop=2 shiftwidth=2 expandtab
 
 set background=dark
-colorscheme base16-atelierforest
+" colorscheme base16-atelierforest
 
 if has("autocmd")
   autocmd! BufWritePost .vimrc source $MYVIMRC " Re-source vimrc on save
@@ -104,5 +104,5 @@ noremap <buffer> <silent> $ g$
 " ---------------------------------------------------------------------
 " ---------------------------------------------------------------------
 
-let g:ycm_global_ycm_extra_conf = '~/.vim/config/.ycm_extra_conf.py'
-let g:ycm_filetype_whitelist = { 'c': 1, 'cpp': 1, 'python': 1 }
+" let g:ycm_global_ycm_extra_conf = '~/.vim/config/.ycm_extra_conf.py'
+" let g:ycm_filetype_whitelist = { 'c': 1, 'cpp': 1, 'python': 1 }

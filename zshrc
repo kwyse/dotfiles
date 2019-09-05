@@ -22,7 +22,7 @@
 #
 # -- Initialization ---------------------------------------------------
 # ---------------------------------------------------------------------
-autoload -U compinit && compinit
+autoload -Uz compinit && compinit
 autoload -U colors && colors
 
 # -- Options ----------------------------------------------------------
@@ -57,8 +57,6 @@ setopt share_history            # Active history read/write
 # -- Prompt -----------------------------------------------------------
 # ---------------------------------------------------------------------
 PROMPT='
-[%(!.%F{red%}%n%f.%F{green%}%n%f) at \
-%F{blue%}%m%f] \
 %F{yellow%}%~%f \
 $(git_prompt_string)
 %F{blue%}$%f '
@@ -139,7 +137,7 @@ GIT_PROMPT_STAGED="%F{034}■%f"
 function git_prompt_string() {
   local git_where="$(parse_git_branch)"
   [ -n "$git_where" ] &&
-  echo "on %F{069}${git_where#(refs/heads/|tags/)} $(parse_git_state)"
+  echo "[%F{blue}${git_where#(refs/heads/|tags/)}%f] $(parse_git_state)"
 }
 
 # Find the name of the branch of the current working directory
