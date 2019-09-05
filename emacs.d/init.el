@@ -13,6 +13,8 @@
 (use-package cargo
   :hook (rust-mode . cargo-minor-mode))
 
+(use-package atom-one-dark-theme)
+
 (global-display-line-numbers-mode)
 (setq display-line-numbers-type 'relative)
 (menu-bar-no-scroll-bar)
