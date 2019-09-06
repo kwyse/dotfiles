@@ -13,6 +13,9 @@
 (use-package cargo
   :hook (rust-mode . cargo-minor-mode))
 
+(use-package magit
+  :bind ("C-x g" . magit-status))
+
 (use-package atom-one-dark-theme)
 
 (global-display-line-numbers-mode)
