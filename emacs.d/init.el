@@ -24,4 +24,8 @@
 (column-number-mode)
 (tool-bar-mode 0)
 
+(setq make-backup-files nil)
+(setq auto-save-default nil)
+(setq create-lockfiles nil)
+
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
