@@ -30,6 +30,7 @@
 (column-number-mode)
 (tool-bar-mode 0)
 
+(when (member "Inconsolata" (font-family-list)) (set-frame-font "Inconsolata 13" nil t))
 (setenv "PATH" (get-shell-path-contents))
 
 (setq make-backup-files nil)
