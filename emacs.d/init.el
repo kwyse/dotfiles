@@ -20,9 +20,24 @@
 
 (use-package atom-one-dark-theme)
 
-(defun get-shell-path-contents ()
-  "Returns the contents of $PATH based on the user's shell"
-  (replace-regexp-in-string "\n+$" "" (shell-command-to-string "$SHELL -c 'echo $PATH'")))
+(defun get-shell-path () (shell-command-to-string "$SHELL --login -c 'echo ${PATH}'"))
+(defun trim-trailing-space (string) (replace-regexp-in-string "[\t\s\n]+$" "" string))
+(defun not-empty (string) (> (length string) 0))
+(defun split-path-string (path) (seq-filter #'not-empty (split-string path ":")))
+(defun join-path-list (paths) (string-join paths ":"))
+(defun normalize-path (path) (split-path-string (trim-trailing-space path)))
+(defun combine-env-paths ()
+  (seq-map #'normalize-path (list (getenv "PATH") (get-shell-path))))
+(defun combine-env-and-exec-paths ()
+  (apply #'append (append (combine-env-paths) (list exec-path))))
+(defun get-unique-full-path () (seq-uniq (combine-env-and-exec-paths)))
+
+(defun fix-path ()
+  (let ((paths (get-unique-full-path)))
+  (setenv "PATH" (join-path-list paths))
+  (setq exec-path paths)))
+
+(fix-path)
 
 (global-display-line-numbers-mode)
 (setq display-line-numbers-type 'relative)
@@ -31,12 +46,23 @@
 (tool-bar-mode 0)
 
 (when (member "Inconsolata" (font-family-list)) (set-frame-font "Inconsolata 13" nil t))
-(setenv "PATH" (get-shell-path-contents))
 
 (setq make-backup-files nil)
 (setq auto-save-default nil)
 (setq create-lockfiles nil)
 
-(setq exec-path (append exec-path (split-string (getenv "PATH") ":")))
+(setq ispell-program-name "aspell")
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+(ert-deftest trim-trailing-space-test ()
+  (should (equal (trim-trailing-space "") ""))
+  (should (equal (trim-trailing-space "string") "string"))
+  (should (equal (trim-trailing-space "string\n") "string"))
+  (should (equal (trim-trailing-space "string \t\n ") "string")))
+
+(ert-deftest split-path-string-test ()
+  (should (equal (split-path-string "") nil))
+  (should (equal (split-path-string "foo") '("foo")))
+  (should (equal (split-path-string "foo:") '("foo")))
+  (should (equal (split-path-string "foo:bar") '("foo" "bar"))))
