@@ -18,6 +18,19 @@
 (use-package magit
   :bind ("C-x g" . magit-status))
 
+(use-package markdown-mode
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+	 ("\\.md\\'" . markdown-mode)
+	 ("\\.markdown\\'" . markdown-mode))
+  :init
+  (setq markdown-command "pandoc"))
+
+(add-hook 'markdown-mode-hook (lambda ()
+				(flyspell-mode)
+				(setq fill-column 100)
+				(auto-fill-mode t)))
+
 (use-package atom-one-dark-theme)
 
 (defun get-shell-path () (shell-command-to-string "$SHELL --login -c 'echo ${PATH}'"))
