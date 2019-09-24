@@ -2,6 +2,8 @@
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (package-initialize)
 
+(require 'subr-x)
+
 (eval-when-compile
   (require 'use-package))
 
