@@ -33,6 +33,8 @@
 				(setq fill-column 100)
 				(auto-fill-mode t)))
 
+(add-hook 'git-commit-setup-hook 'git-commit-turn-on-flyspell)
+
 (use-package atom-one-dark-theme)
 
 (defun get-shell-path () (shell-command-to-string "$SHELL --login -c 'echo ${PATH}'"))
