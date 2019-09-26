@@ -29,6 +29,7 @@
   (setq markdown-command "pandoc"))
 
 (add-hook 'markdown-mode-hook (lambda ()
+				(markdown-toggle-math)
 				(flyspell-mode)
 				(setq fill-column 100)
 				(auto-fill-mode t)))
