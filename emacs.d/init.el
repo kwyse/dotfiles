@@ -68,6 +68,7 @@
 (setq auto-save-default nil)
 (setq create-lockfiles nil)
 
+(setq apropos-sort-by-scores t)
 (setq ispell-program-name "aspell")
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
