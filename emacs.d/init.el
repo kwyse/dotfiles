@@ -14,6 +14,8 @@
   :init
   (setq rust-format-on-save t))
 
+(add-hook 'rust-mode-hook (lambda() (subword-mode)))
+
 (use-package cargo
   :hook (rust-mode . cargo-minor-mode))
 
