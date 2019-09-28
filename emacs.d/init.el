@@ -78,6 +78,12 @@
 (setq ido-everywhere t)
 (ido-mode "both")
 
+(windmove-default-keybindings)
+(global-set-key (kbd "C-x w k") 'windmove-up)
+(global-set-key (kbd "C-x w j") 'windmove-down)
+(global-set-key (kbd "C-x w h") 'windmove-left)
+(global-set-key (kbd "C-x w l") 'windmove-right)
+
 (global-visual-line-mode)
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
