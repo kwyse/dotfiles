@@ -78,6 +78,8 @@
 (setq ido-everywhere t)
 (ido-mode "both")
 
+(global-visual-line-mode)
+
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 (ert-deftest trim-trailing-space-test ()
