@@ -40,6 +40,10 @@
   :config
   (setq helm-google-suggest-search-url "https://duckduckgo.com/?q=%s"))
 
+(use-package pdf-tools
+  :init
+  (pdf-tools-install))
+
 (add-hook 'git-commit-setup-hook 'git-commit-turn-on-flyspell)
 
 (use-package atom-one-dark-theme)
