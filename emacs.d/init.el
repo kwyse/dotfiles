@@ -36,6 +36,10 @@
 				(setq fill-column 100)
 				(auto-fill-mode t)))
 
+(use-package helm
+  :config
+  (setq helm-google-suggest-search-url "https://duckduckgo.com/?q=%s"))
+
 (add-hook 'git-commit-setup-hook 'git-commit-turn-on-flyspell)
 
 (use-package atom-one-dark-theme)
@@ -75,7 +79,6 @@
 (setq apropos-sort-by-scores t)
 (setq ispell-program-name "aspell")
 (setq ido-enable-flex-matching t)
-(setq ido-everywhere t)
 (ido-mode "both")
 
 (windmove-default-keybindings)
