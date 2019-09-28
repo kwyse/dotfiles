@@ -68,6 +68,7 @@
 (setq make-backup-files nil)
 (setq auto-save-default nil)
 (setq create-lockfiles nil)
+(setq shift-select-mode nil)
 
 (setq apropos-sort-by-scores t)
 (setq ispell-program-name "aspell")
