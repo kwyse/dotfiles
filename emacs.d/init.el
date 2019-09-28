@@ -72,6 +72,7 @@
 (setq apropos-sort-by-scores t)
 (setq ispell-program-name "aspell")
 (setq ido-enable-flex-matching t)
+(setq ido-everywhere t)
 (ido-mode "both")
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
