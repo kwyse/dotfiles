@@ -44,6 +44,8 @@
   :init
   (pdf-tools-install))
 
+(use-package password-store)
+
 (add-hook 'git-commit-setup-hook 'git-commit-turn-on-flyspell)
 
 (use-package atom-one-dark-theme)
