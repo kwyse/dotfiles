@@ -82,6 +82,7 @@
 (setq create-lockfiles nil)
 (setq shift-select-mode nil)
 
+(setq tramp-default-method "ssh")
 (setq apropos-sort-by-scores t)
 (setq ispell-program-name "aspell")
 (setq ido-enable-flex-matching t)
