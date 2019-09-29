@@ -91,6 +91,8 @@
 (global-set-key (kbd "C-x w h") 'windmove-left)
 (global-set-key (kbd "C-x w l") 'windmove-right)
 
+(global-set-key [remap dabbrev-expand] 'hippie-expand)
+
 (global-visual-line-mode)
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
