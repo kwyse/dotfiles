@@ -20,7 +20,7 @@
   :hook (rust-mode . cargo-minor-mode))
 
 (use-package magit
-  :bind ("C-x g" . magit-status))
+  :bind ("C-x v" . magit-status))
 
 (use-package markdown-mode
   :commands (markdown-mode gfm-mode)
