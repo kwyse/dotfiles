@@ -47,6 +47,28 @@
 
 (use-package password-store)
 
+(use-package scala-mode
+  :mode "\\.s\\(cala\\|bt\\)$")
+
+(add-hook 'scala-mode-hook
+	  (lambda ()
+	    (add-hook 'before-save-hook 'lsp-format-buffer nil 'make-it-local)
+	    (projectile-mode +1)))
+
+(use-package flycheck
+  :hook (scala-mode . flycheck-mode)
+  :hook (rust-mode . flycheck-mode))
+
+(use-package lsp-mode
+  :hook (scala-mode . lsp)
+  :hook (rust-mode . lsp)
+  :config (setq lsp-prefer-flymake nil
+		lsp-enable-snippet nil))
+
+(use-package lsp-ui)
+
+(use-package company-lsp)
+
 (add-hook 'git-commit-setup-hook 'git-commit-turn-on-flyspell)
 
 (use-package atom-one-dark-theme)
