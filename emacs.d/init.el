@@ -33,6 +33,7 @@
 (add-hook 'markdown-mode-hook (lambda ()
 				(markdown-toggle-math)
 				(flyspell-mode)
+				(abbrev-mode)
 				(setq fill-column 100)
 				(auto-fill-mode t)))
 
