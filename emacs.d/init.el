@@ -153,6 +153,8 @@
   (should (equal (split-path-string "foo") '("foo")))
   (should (equal (split-path-string "foo:") '("foo")))
   (should (equal (split-path-string "foo:bar") '("foo" "bar"))))
+(unless (member "~/.emacs.d/lisp" load-path)
+  (setq load-path (add-to-list 'load-path "~/.emacs.d/lisp")))
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 
