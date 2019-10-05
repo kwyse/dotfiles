@@ -69,6 +69,9 @@
 
 (use-package company-lsp)
 
+(use-package projectile
+  :bind (("C-c p" . projectile-command-map)))
+
 (add-hook 'git-commit-setup-hook 'git-commit-turn-on-flyspell)
 
 (use-package atom-one-dark-theme)
