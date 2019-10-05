@@ -161,3 +161,4 @@
      (concat "/sudo:root@localhost:"
 	     buffer-file-name))))
 
+(require 'dired-x)
