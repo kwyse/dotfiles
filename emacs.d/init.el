@@ -153,6 +153,9 @@
   (should (equal (split-path-string "foo") '("foo")))
   (should (equal (split-path-string "foo:") '("foo")))
   (should (equal (split-path-string "foo:bar") '("foo" "bar"))))
+(put 'upcase-region 'disabled nil)
+(put 'downcase-region 'disabled nil)
+
 (defun sudo()
   "Use TRAMP to access the current buffer as the root user"
   (interactive)
