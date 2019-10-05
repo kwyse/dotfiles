@@ -76,6 +76,15 @@
 
 (add-hook 'git-commit-setup-hook 'git-commit-turn-on-flyspell)
 
+(setq org-special-ctrl-a/e t
+      org-special-ctrl-k t
+      org-ctrl-k-protect-subtree 'error)
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp . t)
+   (haskell . t)))
+
 (use-package atom-one-dark-theme)
 
 (defun get-shell-path () (shell-command-to-string "$SHELL --login -c 'echo ${PATH}'"))
@@ -121,6 +130,11 @@
 (global-set-key (kbd "C-x w j") 'windmove-down)
 (global-set-key (kbd "C-x w h") 'windmove-left)
 (global-set-key (kbd "C-x w l") 'windmove-right)
+
+(global-set-key (kbd "C-c l") 'org-store-link)
+(global-set-key (kbd "C-c a") 'org-agenda)
+(global-set-key (kbd "C-c c") 'org-capture)
+(global-set-key (kbd "C-c b") 'org-switchb)
 
 (global-set-key [remap dabbrev-expand] 'hippie-expand)
 
