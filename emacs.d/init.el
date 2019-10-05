@@ -47,6 +47,8 @@
 
 (use-package password-store)
 
+(use-package haskell-mode)
+
 (use-package scala-mode
   :mode "\\.s\\(cala\\|bt\\)$")
 
