@@ -153,3 +153,11 @@
   (should (equal (split-path-string "foo") '("foo")))
   (should (equal (split-path-string "foo:") '("foo")))
   (should (equal (split-path-string "foo:bar") '("foo" "bar"))))
+(defun sudo()
+  "Use TRAMP to access the current buffer as the root user"
+  (interactive)
+  (when buffer-file-name
+    (find-alternate-file
+     (concat "/sudo:root@localhost:"
+	     buffer-file-name))))
+
