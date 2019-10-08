@@ -159,6 +159,14 @@ configuration.
 	      (setq fill-column 80)))
 #+END_SRC
 
+Recommended key configurations are included.
+
+#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+  (setq org-special-ctrl-a/e t
+	org-special-ctrl-k t
+	org-ctrl-k-protect-subtree 'error)
+#+END_SRC
+
 A function to go to the next heading whilst narrowing is in effect is defined to
 make an Org file feel more akin to an Info one.
 
