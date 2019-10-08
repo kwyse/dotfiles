@@ -30,7 +30,7 @@ are always be downloaded if they are are not found locally.n
 
 ** Global settings
 
-Preferential global settings are configured next. The documentation
+Preferential global settings are configured next.  The documentation
 for all of these settings is available in Emacs itself.
 
 #+BEGIN_SRC emacs-lisp :tangle emacs/init.el
@@ -68,11 +68,31 @@ sessions.
 
 *** Magit
 
-Magit provides an interface with Git. The keybinding for interfacing
+Magit provides an interface with Git.  The keybinding for interfacing
 with the built-in Emacs version control system is overridden because
 Magit supersedes its functionality.
 
 #+BEGIN_SRC emacs-lisp :tangle emacs/init.el
   (use-package magit
     :bind ("C-x v" . magit-status))
+#+END_SRC
+
+** Language modes
+
+Most language-specific major modes are provided by third parties, but
+some are included with Emacs.  Both kinds are configured here.
+
+*** Org mode
+
+Org mode is the literate programming environment this document is
+written in.  It's already included in Emacs but it can be enhanced
+with some further configuration.
+
+#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+  (add-hook 'org-mode-hook
+	    (lambda ()
+	      (abbrev-mode)
+	      (auto-fill-mode)
+	      (flyspell-mode)
+	      (setq fill-column 80)))
 #+END_SRC
