@@ -12,6 +12,7 @@ MELPA is a package archive for Emacs.  Useful libraries are stored there.
   (add-to-list 'package-archives
 	       '("melpa" . "https://melpa.org/packages/"))
   (package-initialize)
+  (package-refresh-contents)
 #+END_SRC
 
 The ~use-package~ library adds a macro that provides a concise way to
@@ -20,9 +21,7 @@ are always be downloaded if they are are not found locally.n
 
 #+BEGIN_SRC emacs-lisp :tangle emacs/init.el
   (unless (require 'use-package nil t)
-    (progn
-      (package-refresh-contents)
-      (package-install 'use-package)))
+    (package-install 'use-package))
 
   (eval-when-compile (require 'use-package))
   (require 'use-package-ensure)
@@ -47,11 +46,17 @@ for all of these settings is available in Emacs itself.
 
 	shift-select-mode nil
 
-	apropos-sort-by-scores nil)
+	apropos-sort-by-scores t)
 #+END_SRC
 
 It's useful to always delete trailing whitespace on save.
 
 #+BEGIN_SRC emacs-lisp :tangle emacs/init.el
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
+#+END_SRC
+
+A colour scheme adds familiarity.
+
+#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+  (use-package atom-one-dark-theme)
 #+END_SRC
