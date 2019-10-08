@@ -1,0 +1,30 @@
+* Emacs
+
+All other configuration follows from Emacs, because Emacs the means by
+which Org files are edited.
+
+** Initialisation
+
+MELPA is a package archive for Emacs.  Useful libraries are stored there.
+
+#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+  (require 'package)
+  (add-to-list 'package-archives
+	       '("melpa" . "https://melpa.org/packages/"))
+  (package-initialize)
+#+END_SRC
+
+The ~use-package~ library adds a macro that provides a concise way to
+keep configuration for external packages organised.  External packages
+are always be downloaded if they are are not found locally.n
+
+#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+  (unless (require 'use-package nil t)
+    (progn
+      (package-refresh-contents)
+      (package-install 'use-package)))
+
+  (eval-when-compile (require 'use-package))
+  (require 'use-package-ensure)
+  (setq use-package-always-ensure t)
+#+END_SRC
