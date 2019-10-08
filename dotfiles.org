@@ -49,9 +49,9 @@ these settings is available in Emacs itself.
 
 	shift-select-mode nil
 
-	apropos-sort-by-scores t)
+	tramp-default-method "ssh"
 
-  (setq ipsell-program-name "aspell")
+	apropos-sort-by-scores t)
 #+END_SRC
 
 It's useful to always delete trailing whitespace on save.
@@ -96,6 +96,35 @@ configured correctly.  Here they are set explicitly.
 ** Global modes
 
 These are modes would be useful in the vast majority of Emacs sessions.
+
+*** Ido
+
+Ido mode offers simple word-completion support.
+
+#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+  (ido-mode "both")
+  (setq ido-enable-flex-matching t)
+#+END_SRC
+
+*** Flyspell
+
+Flyspell offers real time spell-checking in buffers.
+
+#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+  (setq ispell-program-name "aspell")
+#+END_SRC
+
+*** Windmove
+
+Windmove enables granular movement among windows.
+
+#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+  (windmove-default-keybindings)
+  (global-set-key (kbd "C-x w k") 'windmove-up)
+  (global-set-key (kbd "C-x w j") 'windmove-down)
+  (global-set-key (kbd "C-x w h") 'windmove-left)
+  (global-set-key (kbd "C-x w l") 'windmove-right)
+#+END_SRC
 
 *** Magit
 
