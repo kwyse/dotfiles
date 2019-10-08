@@ -232,3 +232,13 @@ The ~xcolor~ package enables additional colours to be used in text.
 #+BEGIN_SRC emacs-lisp :tangle emacs/init.el
   (add-to-list 'org-latex-packages-alist '("dvipsnames" "xcolor"))
 #+END_SRC
+
+*** PDF
+
+Viewing PDF documents inside Emacs removes the need for another tool.
+
+#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+  (use-package pdf-tools
+    :init
+    (pdf-tools-install))
+#+END_SRC
