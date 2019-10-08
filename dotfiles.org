@@ -171,7 +171,7 @@ Recommended key configurations are included.
 #+END_SRC
 
 A function to go to the next heading whilst narrowing is in effect is defined to
-make an Org file feel more akin to an Info one.
+make an Org buffer feel more akin to an Info one.
 
 #+BEGIN_SRC emacs-lisp :tangle emacs/init.el
   (defun org-next-heading-node ()
@@ -233,6 +233,24 @@ package enables additional colours to be used in text.
 			   '("" "minted"))
 	      (add-to-list 'org-latex-packages-alist
 			   '("dvipsnames" "xcolor"))))
+#+END_SRC
+
+*** Rust
+
+Rust font locking is provided by ~rust-mode~.  The major mode also interfaces
+with ~rustfmt~ so that the tool is ran on save.
+
+#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+  (use-package rust-mode
+    :init (setq rust-format-on-save t)
+    :hook (rust-mode . subword-mode))
+#+END_SRC
+
+Interacting with Cargo is better provided with the ~cargo-minor-mode~ package.
+
+#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+  (use-package cargo
+    :hook (rust-mode . cargo-minor-mode))
 #+END_SRC
 
 *** PDF
