@@ -60,3 +60,19 @@ A colour scheme adds familiarity.
 #+BEGIN_SRC emacs-lisp :tangle emacs/init.el
   (use-package atom-one-dark-theme)
 #+END_SRC
+
+** Global modes
+
+These are modes would be useful in the vast majority of Emacs
+sessions.
+
+*** Magit
+
+Magit provides an interface with Git. The keybinding for interfacing
+with the built-in Emacs version control system is overridden because
+Magit supersedes its functionality.
+
+#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+  (use-package magit
+    :bind ("C-x v" . magit-status))
+#+END_SRC
