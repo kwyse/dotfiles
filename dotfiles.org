@@ -47,6 +47,8 @@ these settings is available in Emacs itself.
 	shift-select-mode nil
 
 	apropos-sort-by-scores t)
+
+  (setq ipsell-program-name "aspell")
 #+END_SRC
 
 It's useful to always delete trailing whitespace on save.
@@ -59,6 +61,25 @@ A colour scheme adds familiarity.
 
 #+BEGIN_SRC emacs-lisp :tangle emacs/init.el
   (use-package atom-one-dark-theme)
+#+END_SRC
+
+On OS X at least, ~exec-path~ and the environment =PATH= variables are not
+configured correctly.  Here they are set explicitly.
+
+#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+  (defun get-shell-path ()
+    (seq-uniq
+     (append
+      exec-path
+      (split-string
+       (replace-regexp-in-string
+	"[\t\s\n]+$"
+	""
+	(shell-command-to-string "$SHELL --login -c 'echo ${PATH}'"))
+       ":"))))
+
+  (setenv "PATH" (string-join (get-shell-path) ":"))
+  (setq exec-path (get-shell-path))
 #+END_SRC
 
 ** Global modes
