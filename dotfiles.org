@@ -91,6 +91,7 @@ configured correctly.  Here they are set explicitly.
 	(shell-command-to-string "$SHELL --login -c 'echo ${PATH}'"))
        ":"))))
 
+  (require 'subr-x)
   (setenv "PATH" (string-join (get-shell-path) ":"))
   (setq exec-path (get-shell-path))
 #+END_SRC
@@ -216,21 +217,22 @@ Keybindings should be defined to easily execute both of these functions.
 #+END_SRC
 
 When exporting to \LaTeX, it's useful to have some common packages already
-included.  Minted is used to highlight source code snippets.
+included.  Minted is used to highlight source code snippets.  The ~xcolor~
+package enables additional colours to be used in text.
 
 #+BEGIN_SRC emacs-lisp :tangle emacs/init.el
-  (add-to-list 'org-latex-packages-alist '("" "minted"))
   (let ((pdf-cmd (concat "%latex " "-shell-escape "
 			 "-interaction " "nonstopmod "
 			 "-output-directory " "%o " "%f")))
     (setq org-latex-listings 'minted
 	  org-latex-pdf-process (list pdf-cmd pdf-cmd pdf-cmd)))
-#+END_SRC
 
-The ~xcolor~ package enables additional colours to be used in text.
-
-#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
-  (add-to-list 'org-latex-packages-alist '("dvipsnames" "xcolor"))
+  (add-hook 'org-mode-hook
+	    (lambda ()
+	      (add-to-list 'org-latex-packages-alist
+			   '("" "minted"))
+	      (add-to-list 'org-latex-packages-alist
+			   '("dvipsnames" "xcolor"))))
 #+END_SRC
 
 *** PDF
