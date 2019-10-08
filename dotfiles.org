@@ -117,6 +117,52 @@ configuration.
 	      (setq fill-column 80)))
 #+END_SRC
 
+A function to go to the next heading whilst narrowing is in effect is defined to
+make an Org file feel more akin to an Info one.
+
+#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+  (defun org-next-heading-node ()
+    "Move to the next heading node while narrowed."
+    (interactive)
+    (widen)
+    (forward-char 1)
+    (if (search-forward-regexp "^\*+" (point-max) t)
+	(progn
+	  (forward-line 0)
+	  (org-narrow-to-subtree)
+	  (org-content)
+	  (org-show-entry))))
+#+END_SRC
+
+A similar one is defined to go to the previous heading.
+
+#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+  (defun org-prev-heading-node ()
+    "Move to the previous heading node while narrowed."
+    (interactive)
+    (org-narrow-to-subtree)
+    (goto-char (point-min))
+    (widen)
+    (if (search-backward-regexp "^\*+" (point-min) t)
+	(progn
+	  (forward-line 0)
+	  (org-narrow-to-subtree)
+	  (org-content)
+	  (org-show-entry))
+      (progn
+	(org-overview)
+	(goto-char (point-min)))))
+#+END_SRC
+
+Keybindings should be defined to easily execute both of these functions.
+
+#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+  (add-hook 'org-mode-hook
+	    (lambda ()
+	      (local-set-key (kbd "C-c n") 'org-next-heading-node)
+	      (local-set-key (kbd "C-c p") 'org-prev-heading-node)))
+#+END_SRC
+
 When exporting to \LaTeX, it's useful to have some common packages already
 included.  Minted is used to highlight source code snippets.
 
