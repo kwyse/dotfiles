@@ -137,6 +137,8 @@ functionality.
 #+BEGIN_SRC emacs-lisp :tangle emacs/init.el
   (use-package magit
     :bind ("C-x v" . magit-status))
+
+  (add-hook 'git-commit-setup-hook 'git-commit-turn-on-flyspell)
 #+END_SRC
 
 ** Language modes
