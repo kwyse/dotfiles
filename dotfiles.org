@@ -34,6 +34,9 @@ Preferential global settings are configured next.  The documentation for all of
 these settings is available in Emacs itself.
 
 #+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+  (global-set-key [remap dabbrev-expand] 'hippie-expand)
+
+  (global-visual-line-mode)
   (global-display-line-numbers-mode)
   (menu-bar-no-scroll-bar)
   (column-number-mode)
@@ -61,6 +64,14 @@ A colour scheme adds familiarity.
 
 #+BEGIN_SRC emacs-lisp :tangle emacs/init.el
   (use-package atom-one-dark-theme)
+#+END_SRC
+
+Some functions are disabled by default because they can be destructive.
+Functions that have an understood purpose can be enabled.
+
+#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+  (put 'upcase-region 'disabled nil)
+  (put 'downcase-region 'disabled nil)
 #+END_SRC
 
 On OS X at least, ~exec-path~ and the environment =PATH= variables are not
