@@ -1,7 +1,7 @@
 * Emacs
 
-All other configuration follows from Emacs, because Emacs the means by
-which Org files are edited.
+All other configuration follows from Emacs, because Emacs the means by which Org
+files are edited.
 
 ** Initialisation
 
@@ -15,9 +15,9 @@ MELPA is a package archive for Emacs.  Useful libraries are stored there.
   (package-refresh-contents)
 #+END_SRC
 
-The ~use-package~ library adds a macro that provides a concise way to
-keep configuration for external packages organised.  External packages
-are always be downloaded if they are are not found locally.n
+The ~use-package~ library adds a macro that provides a concise way to keep
+configuration for external packages organised.  External packages are always be
+downloaded if they are not found locally.n
 
 #+BEGIN_SRC emacs-lisp :tangle emacs/init.el
   (unless (require 'use-package nil t)
@@ -30,8 +30,8 @@ are always be downloaded if they are are not found locally.n
 
 ** Global settings
 
-Preferential global settings are configured next.  The documentation
-for all of these settings is available in Emacs itself.
+Preferential global settings are configured next.  The documentation for all of
+these settings is available in Emacs itself.
 
 #+BEGIN_SRC emacs-lisp :tangle emacs/init.el
   (global-display-line-numbers-mode)
@@ -63,14 +63,13 @@ A colour scheme adds familiarity.
 
 ** Global modes
 
-These are modes would be useful in the vast majority of Emacs
-sessions.
+These are modes would be useful in the vast majority of Emacs sessions.
 
 *** Magit
 
-Magit provides an interface with Git.  The keybinding for interfacing
-with the built-in Emacs version control system is overridden because
-Magit supersedes its functionality.
+Magit provides an interface with Git.  The keybinding for interfacing with the
+built-in Emacs version control system is overridden because Magit supersedes its
+functionality.
 
 #+BEGIN_SRC emacs-lisp :tangle emacs/init.el
   (use-package magit
@@ -79,14 +78,14 @@ Magit supersedes its functionality.
 
 ** Language modes
 
-Most language-specific major modes are provided by third parties, but
-some are included with Emacs.  Both kinds are configured here.
+Most language-specific major modes are provided by third parties, but some are
+included with Emacs.  Both kinds are configured here.
 
 *** Org mode
 
-Org mode is the literate programming environment this document is
-written in.  It's already included in Emacs but it can be enhanced
-with some further configuration.
+Org mode is the literate programming environment this document is written in.
+It's already included in Emacs but it can be enhanced with some further
+configuration.
 
 #+BEGIN_SRC emacs-lisp :tangle emacs/init.el
   (add-hook 'org-mode-hook
