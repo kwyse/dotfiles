@@ -37,6 +37,19 @@
 				(setq fill-column 100)
 				(auto-fill-mode t)))
 
+(add-hook 'org-mode-hook (lambda ()
+			   (flyspell-mode)
+			   (abbrev-mode)
+			   (setq fill-column 80
+				 org-latex-listings 'minted
+				 org-latex-pdf-process '("%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
+							  "%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
+							  "%latex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+			   (auto-fill-mode t)))
+
+(require 'ox-latex)
+(add-to-list 'org-latex-packages-alist '("newfloat" "minted"))
+(add-to-list 'org-latex-packages-alist '("dvipsnames" "xcolor"))
 (use-package helm
   :config
   (setq helm-google-suggest-search-url "https://duckduckgo.com/?q=%s"))
