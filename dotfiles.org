@@ -128,3 +128,9 @@ included.  Minted is used to highlight source code snippets.
     (setq org-latex-listings 'minted
 	  org-latex-pdf-process (list pdf-cmd pdf-cmd pdf-cmd)))
 #+END_SRC
+
+The ~xcolor~ package enables additional colours to be used in text.
+
+#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+  (add-to-list 'org-latex-packages-alist '("dvipsnames" "xcolor"))
+#+END_SRC
