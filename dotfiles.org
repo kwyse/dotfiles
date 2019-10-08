@@ -28,3 +28,30 @@ are always be downloaded if they are are not found locally.n
   (require 'use-package-ensure)
   (setq use-package-always-ensure t)
 #+END_SRC
+
+** Global settings
+
+Preferential global settings are configured next. The documentation
+for all of these settings is available in Emacs itself.
+
+#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+  (global-display-line-numbers-mode)
+  (menu-bar-no-scroll-bar)
+  (column-number-mode)
+  (tool-bar-mode 0)
+  (setq auto-save-default nil
+	create-lockfiles nil
+	make-backup-files nil
+
+	display-line-numbers-type 'relative
+
+	shift-select-mode nil
+
+	apropos-sort-by-scores nil)
+#+END_SRC
+
+It's useful to always delete trailing whitespace on save.
+
+#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+  (add-hook 'before-save-hook 'delete-trailing-whitespace)
+#+END_SRC
