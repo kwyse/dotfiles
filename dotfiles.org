@@ -1,7 +1,7 @@
 * Emacs
 
-All other configuration follows from Emacs, because Emacs the means by which Org
-files are edited.
+All other configuration follows from Emacs, because Emacs is the means by which
+Org files are edited.
 
 ** Initialisation
 
@@ -16,8 +16,8 @@ MELPA is a package archive for Emacs.  Useful libraries are stored there.
 #+END_SRC
 
 The ~use-package~ library adds a macro that provides a concise way to keep
-configuration for external packages organised.  External packages are always be
-downloaded if they are not found locally.n
+configuration for external packages organised.  External packages will always be
+downloaded if they are not found locally.
 
 #+BEGIN_SRC emacs-lisp :tangle emacs/init.el
   (unless (require 'use-package nil t)
@@ -153,21 +153,99 @@ Org mode is the literate programming environment this document is written in.
 It's already included in Emacs but it can be enhanced with some further
 configuration.
 
+Some values must be set before Org mode is even loaded.
+
+#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+  (setq org-enforce-todo-checkbox-dependencies t
+	org-enforce-todo-dependencies t
+	org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
+			    (sequence "WAIT(w@/!)" "|" "CANC(c@/!)")))
+#+END_SRC
+
+And some are useful in every mode.
+
+#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+  (global-set-key (kbd "C-c a") 'org-agenda)
+#+END_SRC
+
+However, most values are set upon entering an Org buffer.
+
 #+BEGIN_SRC emacs-lisp :tangle emacs/init.el
   (add-hook 'org-mode-hook
 	    (lambda ()
-	      (abbrev-mode)
-	      (auto-fill-mode)
-	      (flyspell-mode)
-	      (setq fill-column 80)))
 #+END_SRC
 
-Recommended key configurations are included.
+Helpful minor modes are enabled.
 
 #+BEGIN_SRC emacs-lisp :tangle emacs/init.el
-  (setq org-special-ctrl-a/e t
-	org-special-ctrl-k t
-	org-ctrl-k-protect-subtree 'error)
+  (abbrev-mode)
+  (auto-fill-mode)
+  (flyspell-mode)
+#+END_SRC
+
+Agenda files are read from an explicit directory, removing the need for these
+keybindings.
+
+#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+  (local-unset-key (kbd "C-c ["))
+  (local-unset-key (kbd "C-c ]"))
+#+END_SRC
+
+The document width is set to something that I find more manageable.
+
+#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+  (setq fill-column 80
+#+END_SRC
+
+Dropbox is used to sync Org files with Orgzly on Android.
+
+#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+  org-agenda-files '("~/Dropbox/org")
+#+END_SRC
+
+This sets preferential faces for states.
+
+#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+  org-todo-keyword-faces '(("TODO" :foreground "moccasin" :weight bold)
+			   ("NEXT" :foreground "cyan" :weight bold)
+			   ("DONE" :foreground "green" :weight bold)
+			   ("WAIT" :foreground "orange" :weight bold)
+			   ("CANC" :foreground "rosy brown" :weight bold :strike-through t))
+#+END_SRC
+
+This enables preferential behaviour for states and transition logging.
+
+#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+  org-use-fast-todo-selection 'prefix
+  org-treat-S-cursor-todo-selection-as-state-change nil
+  org-log-done 'time
+  org-log-into-drawer t
+#+END_SRC
+
+And finally, recommended key configurations are included.
+
+#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+  org-special-ctrl-a/e t
+  org-special-ctrl-k t
+  org-ctrl-k-protect-subtree 'error))) 	; Closes org-mode-hook lambda
+#+END_SRC
+
+A helper function is used to automatically complete parent TODO items.
+
+#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+  (defun org-summary-todo (number-done number-not-done)
+    "Switch entry to DONE when all subentries are done."
+    (when (= number-not-done 0) (org-todo 'done)))
+  (add-hook 'org-after-todo-statistics-hook 'org-summary-todo)
+#+END_SRC
+
+The list of languages to support code execution in source blocks is updated.
+
+#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+  (org-babel-do-load-languages
+    'org-babel-load-languages
+    '((emacs-lisp . t)
+      (ledger . t)))
 #+END_SRC
 
 A function to go to the next heading whilst narrowing is in effect is defined to
