@@ -1,3 +1,13 @@
+* Bootstrap
+
+Script to bootstrap.
+
+#+BEGIN_SRC bash :tangle init.sh
+  if [ ! -f "${HOME}/.emacs/init.el" ]; then
+      ln -s "${PWD}/emacs/init.el" "${HOME}/.emacs.d/init.el"
+  fi
+#+END_SRC
+
 * Emacs
 
 All other configuration follows from Emacs, because Emacs is the means by which
@@ -9,8 +19,8 @@ MELPA is a package archive for Emacs.  Useful libraries are stored there.
 
 #+BEGIN_SRC emacs-lisp :tangle emacs/init.el
   (require 'package)
-  (add-to-list 'package-archives
-	       '("melpa" . "https://melpa.org/packages/"))
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+  (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
   (package-initialize)
   (package-refresh-contents)
 #+END_SRC
@@ -64,8 +74,8 @@ A colour scheme and custom font adds familiarity.
 
 #+BEGIN_SRC emacs-lisp :tangle emacs/init.el
   (use-package atom-one-dark-theme)
-  (when (member "Inconsolata" (font-family-list))
-    (set-frame-font "Inconsolata 13" nil t))
+  (when (member "Menlo" (font-family-list))
+    (set-frame-font "Menlo 13" nil t))
 #+END_SRC
 
 Some functions are disabled by default because they can be destructive.
@@ -94,6 +104,49 @@ configured correctly.  Here they are set explicitly.
   (require 'subr-x)
   (setenv "PATH" (string-join (get-shell-path) ":"))
   (setq exec-path (get-shell-path))
+#+END_SRC
+
+** Mode Line
+
+#+BEGIN_SRC emacs-lisp :tangle emacs/init.el :results value silent
+(setq-default mode-line-format
+      (list "%e"
+	    '(:eval (propertize " " 'face '(:height 164)))
+	    '(:eval (propertize "%m" 'face '(:foreground "#00FFFF" :height 100)))
+	    '(:eval (propertize " • " 'face '(:foreground "#FFFF00")))
+	    '(:eval (propertize "%b" 'face 'font-lock-text-face))
+	    '(:eval (let* ((git-branch (propertize (shell-command-to-string
+						    "git rev-parse --abbrev-ref HEAD 2> /dev/null | tr -d '\n'")
+						   'face '(:foreground "yellow")))
+			   (pos (concat "["
+					(propertize (format-mode-line "%03l")
+						    'face '(:foreground "#228B22"))
+					","
+					(propertize (format-mode-line "%03C")
+						    'face '(:foreground "#226B22"))
+					"]"))
+			   (write-mode (if buffer-file-read-only
+					   (propertize "RO" 'face '(:foreground "green" :height 100))
+					 (propertize "RW" 'face '(:foreground "cyan" :height 100))))
+			   (encoding (if (equal (substring (format "%s"
+								   buffer-file-coding-system)
+							   0 5)
+						"utf-8")
+					 (propertize "UTF-8" 'face '(:foreground "green" :height 100))
+				       (propertize "BINARY" 'face '(:foreground "red" :height 100))))
+			   (right-length (+ (length git-branch)
+					    (length encoding)
+					    (length write-mode)
+					    (length pos)
+					    3)))
+		      (list (propertize " "
+					'display `((space
+						    :align-to (- (+ right right-fringe right-margin)
+								 ,right-length))))
+			    git-branch " "
+			    encoding " "
+			    write-mode " "
+			    pos)))))
 #+END_SRC
 
 ** Global modes
@@ -147,6 +200,25 @@ functionality.
 Most language-specific major modes are provided by third parties, but some are
 included with Emacs.  Both kinds are configured here.
 
+#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+(use-package lsp-mode
+  :bind ("C-c x d" . lsp-find-definition)
+  :bind ("C-c x r" . lsp-find-references)
+  :config (setq lsp-prefer-flymake nil))
+
+(use-package lsp-ui)
+
+(use-package company-lsp
+  :init (setq company-idle-delay 0.1))
+
+(use-package yasnippet)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+(use-package flycheck
+  :init (global-flycheck-mode))
+#+END_SRC
+
 *** Org mode
 
 Org mode is the literate programming environment this document is written in.
@@ -156,6 +228,10 @@ configuration.
 Some values must be set before Org mode is even loaded.
 
 #+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+(use-package org)
+(when (version<= "9.2" (org-version))
+  (require 'org-tempo))
+
   (setq org-enforce-todo-checkbox-dependencies t
 	org-enforce-todo-dependencies t
 	org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
@@ -213,6 +289,12 @@ This sets preferential faces for states.
 			   ("CANC" :foreground "rosy brown" :weight bold :strike-through t))
 #+END_SRC
 
+Default tags are set.
+
+#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+  org-tags-alist '(("@home" . ?h) ("@laptop" . ?l) ("book" . ?b))
+#+END_SRC
+
 This enables preferential behaviour for states and transition logging.
 
 #+BEGIN_SRC emacs-lisp :tangle emacs/init.el
@@ -220,6 +302,22 @@ This enables preferential behaviour for states and transition logging.
   org-treat-S-cursor-todo-selection-as-state-change nil
   org-log-done 'time
   org-log-into-drawer t
+#+END_SRC
+
+Source blocks have font locking enabled and editing is done in the current
+window.
+
+#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+  org-src-preserve-indentation t
+  org-src-window-setup 'current-window
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+  org-confirm-babel-evaluate
+  (lambda (language body)
+    (if (equal language "haskell")
+	nil
+      t))
 #+END_SRC
 
 And finally, recommended key configurations are included.
@@ -321,7 +419,9 @@ with ~rustfmt~ so that the tool is ran on save.
 #+BEGIN_SRC emacs-lisp :tangle emacs/init.el
   (use-package rust-mode
     :init (setq rust-format-on-save t)
-    :hook (rust-mode . subword-mode))
+    :hook
+    (rust-mode . subword-mode)
+    (rust-mode . lsp))
 #+END_SRC
 
 Interacting with Cargo is better provided with the ~cargo-minor-mode~ package.
@@ -329,6 +429,36 @@ Interacting with Cargo is better provided with the ~cargo-minor-mode~ package.
 #+BEGIN_SRC emacs-lisp :tangle emacs/init.el
   (use-package cargo
     :hook (rust-mode . cargo-minor-mode))
+#+END_SRC
+
+*** Scala
+
+#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+(use-package scala-mode
+  :hook (scala-mode . lsp)
+  :mode "\\.s\\(cala\\|bt\\)$")
+
+(add-hook 'scala-mode-hook
+	  (lambda ()
+	    (add-hook 'before-save-hook 'lsp-format-buffer nil 'local)))
+#+END_SRC
+
+*** Haskell
+
+#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+(use-package haskell-mode)
+#+END_SRC
+
+*** Ledger
+
+Emacs is well-suited for manipulating ledger files.
+
+#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+  (setq ledger-binary-path "hledger")
+  (use-package ledger-mode)
+
+  (add-to-list 'load-path "~/.emacs.d/lisp")
+  (require 'beancount)
 #+END_SRC
 
 *** PDF
