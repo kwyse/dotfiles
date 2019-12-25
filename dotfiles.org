@@ -51,6 +51,10 @@ these settings is available in Emacs itself.
   (menu-bar-no-scroll-bar)
   (column-number-mode)
   (tool-bar-mode 0)
+
+  (setq-default indent-tabs-mode nil
+                line-spacing 2)
+
   (setq auto-save-default nil
 	create-lockfiles nil
 	make-backup-files nil
@@ -74,8 +78,8 @@ A colour scheme and custom font adds familiarity.
 
 #+BEGIN_SRC emacs-lisp :tangle emacs/init.el
   (use-package atom-one-dark-theme)
-  (when (member "Menlo" (font-family-list))
-    (set-frame-font "Menlo 13" nil t))
+  (when (member "Monaco" (font-family-list))
+    (set-frame-font "Monaco 13" nil t))
 #+END_SRC
 
 Some functions are disabled by default because they can be destructive.
