@@ -20,7 +20,7 @@ Org files are edited.
 
 MELPA is a package archive for Emacs.  Useful libraries are stored there.
 
-#+begin_src emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
@@ -32,7 +32,7 @@ The ~use-package~ library adds a macro that provides a concise way to keep
 configuration for external packages organised.  External packages will always be
 downloaded if they are not found locally.
 
-#+begin_src emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp
 (unless (require 'use-package nil t)
 (package-install 'use-package))
 
@@ -46,7 +46,7 @@ downloaded if they are not found locally.
 Preferential global settings are configured next.  The documentation for all of
 these settings is available in Emacs itself.
 
-#+begin_src emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp
 (global-set-key [remap dabbrev-expand] 'hippie-expand)
 
 (global-visual-line-mode)
@@ -69,13 +69,13 @@ these settings is available in Emacs itself.
 
 It's useful to always delete trailing whitespace on save.
 
-#+begin_src emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+end_src
 
 A colour scheme and custom font adds familiarity.
 
-#+begin_src emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp
 (use-package atom-one-dark-theme)
 (when (member "Monaco" (font-family-list))
   (set-frame-font "Monaco 12" nil t))
@@ -84,7 +84,7 @@ A colour scheme and custom font adds familiarity.
 Some functions are disabled by default because they can be destructive.
 Functions that have an understood purpose can be enabled.
 
-#+begin_src emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 #+end_src
@@ -92,7 +92,7 @@ Functions that have an understood purpose can be enabled.
 On OS X at least, ~exec-path~ and the environment =PATH= variables are not
 configured correctly.  Here they are set explicitly.
 
-#+begin_src emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp
 (defun get-shell-path ()
   (seq-uniq
    (append
@@ -111,7 +111,7 @@ configured correctly.  Here they are set explicitly.
 
 ** Mode Line
 
-#+begin_src emacs-lisp :tangle emacs/init.el :results value silent
+#+begin_src emacs-lisp :results value silent
 (setq-default mode-line-format
 	      (list "%e"
 		    '(:eval (propertize " " 'face '(:height 164)))
@@ -147,7 +147,7 @@ These are modes would be useful in the vast majority of Emacs sessions.
 
 Ido mode offers simple word-completion support.
 
-#+begin_src emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp
 (ido-mode "both")
 (setq ido-enable-flex-matching t)
 #+end_src
@@ -156,7 +156,7 @@ Ido mode offers simple word-completion support.
 
 Flyspell offers real time spell-checking in buffers.
 
-#+begin_src emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp
 (setq ispell-program-name "aspell")
 #+end_src
 
@@ -164,7 +164,7 @@ Flyspell offers real time spell-checking in buffers.
 
 Windmove enables granular movement among windows.
 
-#+begin_src emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp
 (windmove-default-keybindings)
 (global-set-key (kbd "C-x w k") 'windmove-up)
 (global-set-key (kbd "C-x w j") 'windmove-down)
@@ -178,7 +178,7 @@ Magit provides an interface with Git.  The keybinding for interfacing with the
 built-in Emacs version control system is overridden because Magit supersedes its
 functionality.
 
-#+begin_src emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp
 (use-package magit
   :bind ("C-x v" . magit-status))
 
@@ -190,7 +190,7 @@ functionality.
 Most language-specific major modes are provided by third parties, but some are
 included with Emacs.  Both kinds are configured here.
 
-#+begin_src emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp
 (use-package lsp-mode
   :bind ("C-c x d" . lsp-find-definition)
   :bind ("C-c x r" . lsp-find-references)
@@ -204,7 +204,7 @@ included with Emacs.  Both kinds are configured here.
 (use-package yasnippet)
 #+end_src
 
-#+begin_src emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp
 (use-package flycheck
   :init (global-flycheck-mode))
 #+end_src
@@ -217,7 +217,7 @@ configuration.
 
 Some values must be set before Org mode is even loaded.
 
-#+begin_src emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp
 (use-package org)
 (when (version<= "9.2" (org-version))
   (require 'org-tempo))
@@ -230,20 +230,20 @@ Some values must be set before Org mode is even loaded.
 
 And some are useful in every mode.
 
-#+begin_src emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp
 (global-set-key (kbd "C-c a") 'org-agenda)
 #+end_src
 
 However, most values are set upon entering an Org buffer.
 
-#+begin_src emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp
 (add-hook 'org-mode-hook
 	  (lambda ()
 #+end_src
 
 Helpful minor modes are enabled.
 
-#+begin_src emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp
 (abbrev-mode)
 (auto-fill-mode)
 (flyspell-mode)
@@ -252,26 +252,26 @@ Helpful minor modes are enabled.
 Agenda files are read from an explicit directory, removing the need for these
 keybindings.
 
-#+begin_src emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp
 (local-unset-key (kbd "C-c ["))
 (local-unset-key (kbd "C-c ]"))
 #+end_src
 
 The document width is set to something that I find more manageable.
 
-#+begin_src emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp
 (setq fill-column 80
 #+end_src
 
 Dropbox is used to sync Org files with Orgzly on Android.
 
-#+begin_src emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp
 org-agenda-files '("~/Dropbox/org")
 #+end_src
 
 This sets preferential faces for states.
 
-#+begin_src emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp
 org-todo-keyword-faces '(("TODO" :foreground "moccasin" :weight bold)
 			 ("NEXT" :foreground "cyan" :weight bold)
 			 ("DONE" :foreground "green" :weight bold)
@@ -281,13 +281,13 @@ org-todo-keyword-faces '(("TODO" :foreground "moccasin" :weight bold)
 
 Default tags are set.
 
-#+begin_src emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp
 org-tags-alist '(("@home" . ?h) ("@laptop" . ?l) ("book" . ?b))
 #+end_src
 
 This enables preferential behaviour for states and transition logging.
 
-#+begin_src emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp
 org-use-fast-todo-selection 'prefix
 org-treat-S-cursor-todo-selection-as-state-change nil
 org-log-done 'time
@@ -297,12 +297,12 @@ org-log-into-drawer t
 Source blocks have font locking enabled and editing is done in the current
 window.
 
-#+begin_src emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp
 org-src-preserve-indentation t
 org-src-window-setup 'current-window
 #+end_src
 
-#+begin_src emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp
 org-confirm-babel-evaluate
 (lambda (language body)
   (if (equal language "haskell")
@@ -312,7 +312,7 @@ org-confirm-babel-evaluate
 
 And finally, recommended key configurations are included.
 
-#+begin_src emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp
 org-special-ctrl-a/e t
 org-special-ctrl-k t
 org-ctrl-k-protect-subtree 'error))) 	; Closes org-mode-hook lambda
@@ -320,7 +320,7 @@ org-ctrl-k-protect-subtree 'error))) 	; Closes org-mode-hook lambda
 
 A helper function is used to automatically complete parent TODO items.
 
-#+begin_src emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp
 (defun org-summary-todo (number-done number-not-done)
   "Switch entry to DONE when all subentries are done."
   (when (= number-not-done 0) (org-todo 'done)))
@@ -329,7 +329,7 @@ A helper function is used to automatically complete parent TODO items.
 
 The list of languages to support code execution in source blocks is updated.
 
-#+begin_src emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((emacs-lisp . t)
@@ -339,7 +339,7 @@ The list of languages to support code execution in source blocks is updated.
 A function to go to the next heading whilst narrowing is in effect is defined to
 make an Org buffer feel more akin to an Info one.
 
-#+begin_src emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp
 (defun org-next-heading-node ()
   "Move to the next heading node while narrowed."
   (interactive)
@@ -355,7 +355,7 @@ make an Org buffer feel more akin to an Info one.
 
 A similar one is defined to go to the previous heading.
 
-#+begin_src emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp
 (defun org-prev-heading-node ()
   "Move to the previous heading node while narrowed."
   (interactive)
@@ -375,7 +375,7 @@ A similar one is defined to go to the previous heading.
 
 Keybindings should be defined to easily execute both of these functions.
 
-#+begin_src emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp
 (add-hook 'org-mode-hook
 	  (lambda ()
 	    (local-set-key (kbd "C-c n") 'org-next-heading-node)
@@ -386,7 +386,7 @@ When exporting to \LaTeX, it's useful to have some common packages already
 included.  Minted is used to highlight source code snippets.  The ~xcolor~
 package enables additional colours to be used in text.
 
-#+begin_src emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp
 (let ((pdf-cmd (concat "%latex " "-shell-escape "
 		       "-interaction " "nonstopmod "
 		       "-output-directory " "%o " "%f")))
@@ -403,7 +403,7 @@ package enables additional colours to be used in text.
 
 Ox is used for blogging with Hugo.
 
-#+begin_src emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp
 (use-package ox-hugo
   :after ox)
 #+end_src
@@ -413,7 +413,7 @@ Ox is used for blogging with Hugo.
 Rust font locking is provided by ~rust-mode~.  The major mode also interfaces
 with ~rustfmt~ so that the tool is ran on save.
 
-#+begin_src emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp
 (use-package rust-mode
   :init (setq rust-format-on-save t)
   :hook
@@ -423,14 +423,14 @@ with ~rustfmt~ so that the tool is ran on save.
 
 Interacting with Cargo is better provided with the ~cargo-minor-mode~ package.
 
-#+begin_src emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp
 (use-package cargo
   :hook (rust-mode . cargo-minor-mode))
 #+end_src
 
 *** Scala
 
-#+begin_src emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp
 (use-package scala-mode
   :hook (scala-mode . lsp)
   :mode "\\.s\\(cala\\|bt\\)$")
@@ -453,7 +453,7 @@ Interacting with Cargo is better provided with the ~cargo-minor-mode~ package.
 *** Ledger
 Emacs is well-suited for manipulating ledger files.
 
-#+begin_src emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp
 (setq ledger-binary-path "hledger")
 (use-package ledger-mode)
 
@@ -465,7 +465,7 @@ Emacs is well-suited for manipulating ledger files.
 
 Viewing PDF documents inside Emacs removes the need for another tool.
 
-#+begin_src emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp
 (use-package pdf-tools
   :init
   (pdf-tools-install))
