@@ -129,18 +129,7 @@ configured correctly.  Here they are set explicitly.
 					(propertize (format-mode-line "%03C")
 						    'face '(:foreground "#226B22"))
 					"]"))
-			   (write-mode (if buffer-file-read-only
-					   (propertize "RO" 'face '(:foreground "green" :height 100))
-					 (propertize "RW" 'face '(:foreground "cyan" :height 100))))
-			   (encoding (if (equal (substring (format "%s"
-								   buffer-file-coding-system)
-							   0 5)
-						"utf-8")
-					 (propertize "UTF-8" 'face '(:foreground "green" :height 100))
-				       (propertize "BINARY" 'face '(:foreground "red" :height 100))))
 			   (right-length (+ (length git-branch)
-					    (length encoding)
-					    (length write-mode)
 					    (length pos)
 					    3)))
 		      (list (propertize " "
@@ -148,8 +137,6 @@ configured correctly.  Here they are set explicitly.
 						    :align-to (- (+ right right-fringe right-margin)
 								 ,right-length))))
 			    git-branch " "
-			    encoding " "
-			    write-mode " "
 			    pos)))))
 #+END_SRC
 
