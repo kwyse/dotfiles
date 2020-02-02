@@ -2,11 +2,11 @@
 
 Script to bootstrap.
 
-#+BEGIN_SRC bash :tangle init.sh
+#+begin_src bash :tangle init.sh
 if [ ! -f "${HOME}/.emacs/init.el" ]; then
     ln -s "${PWD}/emacs/init.el" "${HOME}/.emacs.d/init.el"
 fi
-#+END_SRC
+#+end_src
 
 * Emacs
   :PROPERTIES:
@@ -20,33 +20,33 @@ Org files are edited.
 
 MELPA is a package archive for Emacs.  Useful libraries are stored there.
 
-#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp :tangle emacs/init.el
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
 (package-initialize)
 (package-refresh-contents)
-#+END_SRC
+#+end_src
 
 The ~use-package~ library adds a macro that provides a concise way to keep
 configuration for external packages organised.  External packages will always be
 downloaded if they are not found locally.
 
-#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp :tangle emacs/init.el
 (unless (require 'use-package nil t)
 (package-install 'use-package))
 
 (eval-when-compile (require 'use-package))
 (require 'use-package-ensure)
 (setq use-package-always-ensure t)
-#+END_SRC
+#+end_src
 
 ** Global settings
 
 Preferential global settings are configured next.  The documentation for all of
 these settings is available in Emacs itself.
 
-#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp :tangle emacs/init.el
 (global-set-key [remap dabbrev-expand] 'hippie-expand)
 
 (global-visual-line-mode)
@@ -65,34 +65,34 @@ these settings is available in Emacs itself.
       shift-select-mode nil
       tramp-default-method "ssh"
       apropos-sort-by-scores t)
-#+END_SRC
+#+end_src
 
 It's useful to always delete trailing whitespace on save.
 
-#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp :tangle emacs/init.el
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
-#+END_SRC
+#+end_src
 
 A colour scheme and custom font adds familiarity.
 
-#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp :tangle emacs/init.el
 (use-package atom-one-dark-theme)
 (when (member "Monaco" (font-family-list))
   (set-frame-font "Monaco 12" nil t))
-#+END_SRC
+#+end_src
 
 Some functions are disabled by default because they can be destructive.
 Functions that have an understood purpose can be enabled.
 
-#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp :tangle emacs/init.el
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
-#+END_SRC
+#+end_src
 
 On OS X at least, ~exec-path~ and the environment =PATH= variables are not
 configured correctly.  Here they are set explicitly.
 
-#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp :tangle emacs/init.el
 (defun get-shell-path ()
   (seq-uniq
    (append
@@ -107,11 +107,11 @@ configured correctly.  Here they are set explicitly.
 (require 'subr-x)
 (setenv "PATH" (string-join (get-shell-path) ":"))
 (setq exec-path (get-shell-path))
-#+END_SRC
+#+end_src
 
 ** Mode Line
 
-#+BEGIN_SRC emacs-lisp :tangle emacs/init.el :results value silent
+#+begin_src emacs-lisp :tangle emacs/init.el :results value silent
 (setq-default mode-line-format
 	      (list "%e"
 		    '(:eval (propertize " " 'face '(:height 164)))
@@ -137,7 +137,7 @@ configured correctly.  Here they are set explicitly.
 									 ,right-length))))
 				    git-branch " "
 				    pos)))))
-#+END_SRC
+#+end_src
 
 ** Global modes
 
@@ -147,30 +147,30 @@ These are modes would be useful in the vast majority of Emacs sessions.
 
 Ido mode offers simple word-completion support.
 
-#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp :tangle emacs/init.el
 (ido-mode "both")
 (setq ido-enable-flex-matching t)
-#+END_SRC
+#+end_src
 
 *** Flyspell
 
 Flyspell offers real time spell-checking in buffers.
 
-#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp :tangle emacs/init.el
 (setq ispell-program-name "aspell")
-#+END_SRC
+#+end_src
 
 *** Windmove
 
 Windmove enables granular movement among windows.
 
-#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp :tangle emacs/init.el
 (windmove-default-keybindings)
 (global-set-key (kbd "C-x w k") 'windmove-up)
 (global-set-key (kbd "C-x w j") 'windmove-down)
 (global-set-key (kbd "C-x w h") 'windmove-left)
 (global-set-key (kbd "C-x w l") 'windmove-right)
-#+END_SRC
+#+end_src
 
 *** Magit
 
@@ -178,19 +178,19 @@ Magit provides an interface with Git.  The keybinding for interfacing with the
 built-in Emacs version control system is overridden because Magit supersedes its
 functionality.
 
-#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp :tangle emacs/init.el
 (use-package magit
   :bind ("C-x v" . magit-status))
 
 (add-hook 'git-commit-setup-hook 'git-commit-turn-on-flyspell)
-#+END_SRC
+#+end_src
 
 ** Language modes
 
 Most language-specific major modes are provided by third parties, but some are
 included with Emacs.  Both kinds are configured here.
 
-#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp :tangle emacs/init.el
 (use-package lsp-mode
   :bind ("C-c x d" . lsp-find-definition)
   :bind ("C-c x r" . lsp-find-references)
@@ -202,12 +202,12 @@ included with Emacs.  Both kinds are configured here.
   :init (setq company-idle-delay 0.1))
 
 (use-package yasnippet)
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp :tangle emacs/init.el
 (use-package flycheck
   :init (global-flycheck-mode))
-#+END_SRC
+#+end_src
 
 *** Org mode
 
@@ -217,7 +217,7 @@ configuration.
 
 Some values must be set before Org mode is even loaded.
 
-#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp :tangle emacs/init.el
 (use-package org)
 (when (version<= "9.2" (org-version))
   (require 'org-tempo))
@@ -226,120 +226,120 @@ Some values must be set before Org mode is even loaded.
 	org-enforce-todo-dependencies t
 	org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
 			    (sequence "WAIT(w@/!)" "|" "CANC(c@/!)")))
-#+END_SRC
+#+end_src
 
 And some are useful in every mode.
 
-#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp :tangle emacs/init.el
 (global-set-key (kbd "C-c a") 'org-agenda)
-#+END_SRC
+#+end_src
 
 However, most values are set upon entering an Org buffer.
 
-#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp :tangle emacs/init.el
 (add-hook 'org-mode-hook
 	  (lambda ()
-#+END_SRC
+#+end_src
 
 Helpful minor modes are enabled.
 
-#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp :tangle emacs/init.el
 (abbrev-mode)
 (auto-fill-mode)
 (flyspell-mode)
-#+END_SRC
+#+end_src
 
 Agenda files are read from an explicit directory, removing the need for these
 keybindings.
 
-#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp :tangle emacs/init.el
 (local-unset-key (kbd "C-c ["))
 (local-unset-key (kbd "C-c ]"))
-#+END_SRC
+#+end_src
 
 The document width is set to something that I find more manageable.
 
-#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp :tangle emacs/init.el
 (setq fill-column 80
-#+END_SRC
+#+end_src
 
 Dropbox is used to sync Org files with Orgzly on Android.
 
-#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp :tangle emacs/init.el
 org-agenda-files '("~/Dropbox/org")
-#+END_SRC
+#+end_src
 
 This sets preferential faces for states.
 
-#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp :tangle emacs/init.el
 org-todo-keyword-faces '(("TODO" :foreground "moccasin" :weight bold)
 			 ("NEXT" :foreground "cyan" :weight bold)
 			 ("DONE" :foreground "green" :weight bold)
 			 ("WAIT" :foreground "orange" :weight bold)
 			 ("CANC" :foreground "rosy brown" :weight bold :strike-through t))
-#+END_SRC
+#+end_src
 
 Default tags are set.
 
-#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp :tangle emacs/init.el
 org-tags-alist '(("@home" . ?h) ("@laptop" . ?l) ("book" . ?b))
-#+END_SRC
+#+end_src
 
 This enables preferential behaviour for states and transition logging.
 
-#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp :tangle emacs/init.el
 org-use-fast-todo-selection 'prefix
 org-treat-S-cursor-todo-selection-as-state-change nil
 org-log-done 'time
 org-log-into-drawer t
-#+END_SRC
+#+end_src
 
 Source blocks have font locking enabled and editing is done in the current
 window.
 
-#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp :tangle emacs/init.el
 org-src-preserve-indentation t
 org-src-window-setup 'current-window
-#+END_SRC
+#+end_src
 
-#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp :tangle emacs/init.el
 org-confirm-babel-evaluate
 (lambda (language body)
   (if (equal language "haskell")
       nil
     t))
-#+END_SRC
+#+end_src
 
 And finally, recommended key configurations are included.
 
-#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp :tangle emacs/init.el
 org-special-ctrl-a/e t
 org-special-ctrl-k t
 org-ctrl-k-protect-subtree 'error))) 	; Closes org-mode-hook lambda
-#+END_SRC
+#+end_src
 
 A helper function is used to automatically complete parent TODO items.
 
-#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp :tangle emacs/init.el
 (defun org-summary-todo (number-done number-not-done)
   "Switch entry to DONE when all subentries are done."
   (when (= number-not-done 0) (org-todo 'done)))
 (add-hook 'org-after-todo-statistics-hook 'org-summary-todo)
-#+END_SRC
+#+end_src
 
 The list of languages to support code execution in source blocks is updated.
 
-#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp :tangle emacs/init.el
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((emacs-lisp . t)
    (ledger . t)))
-#+END_SRC
+#+end_src
 
 A function to go to the next heading whilst narrowing is in effect is defined to
 make an Org buffer feel more akin to an Info one.
 
-#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp :tangle emacs/init.el
 (defun org-next-heading-node ()
   "Move to the next heading node while narrowed."
   (interactive)
@@ -351,11 +351,11 @@ make an Org buffer feel more akin to an Info one.
 	(org-narrow-to-subtree)
 	(org-content)
 	(org-show-entry))))
-#+END_SRC
+#+end_src
 
 A similar one is defined to go to the previous heading.
 
-#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp :tangle emacs/init.el
 (defun org-prev-heading-node ()
   "Move to the previous heading node while narrowed."
   (interactive)
@@ -371,22 +371,22 @@ A similar one is defined to go to the previous heading.
     (progn
       (org-overview)
       (goto-char (point-min)))))
-#+END_SRC
+#+end_src
 
 Keybindings should be defined to easily execute both of these functions.
 
-#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp :tangle emacs/init.el
 (add-hook 'org-mode-hook
 	  (lambda ()
 	    (local-set-key (kbd "C-c n") 'org-next-heading-node)
 	    (local-set-key (kbd "C-c p") 'org-prev-heading-node)))
-#+END_SRC
+#+end_src
 
 When exporting to \LaTeX, it's useful to have some common packages already
 included.  Minted is used to highlight source code snippets.  The ~xcolor~
 package enables additional colours to be used in text.
 
-#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp :tangle emacs/init.el
 (let ((pdf-cmd (concat "%latex " "-shell-escape "
 		       "-interaction " "nonstopmod "
 		       "-output-directory " "%o " "%f")))
@@ -399,38 +399,38 @@ package enables additional colours to be used in text.
 			 '("" "minted"))
 	    (add-to-list 'org-latex-packages-alist
 			 '("dvipsnames" "xcolor"))))
-#+END_SRC
+#+end_src
 
 Ox is used for blogging with Hugo.
 
-#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp :tangle emacs/init.el
 (use-package ox-hugo
   :after ox)
-#+END_SRC
+#+end_src
 
 *** Rust
 
 Rust font locking is provided by ~rust-mode~.  The major mode also interfaces
 with ~rustfmt~ so that the tool is ran on save.
 
-#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp :tangle emacs/init.el
 (use-package rust-mode
   :init (setq rust-format-on-save t)
   :hook
   (rust-mode . subword-mode)
   (rust-mode . lsp))
-#+END_SRC
+#+end_src
 
 Interacting with Cargo is better provided with the ~cargo-minor-mode~ package.
 
-#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp :tangle emacs/init.el
 (use-package cargo
   :hook (rust-mode . cargo-minor-mode))
-#+END_SRC
+#+end_src
 
 *** Scala
 
-#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp :tangle emacs/init.el
 (use-package scala-mode
   :hook (scala-mode . lsp)
   :mode "\\.s\\(cala\\|bt\\)$")
@@ -438,35 +438,35 @@ Interacting with Cargo is better provided with the ~cargo-minor-mode~ package.
 (add-hook 'scala-mode-hook
 	  (lambda ()
 	    (add-hook 'before-save-hook 'lsp-format-buffer nil 'local)))
-#+END_SRC
+#+end_src
 
 *** Haskell
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package haskell-mode)
-#+END_SRC
+#+end_src
 
 *** Erlang
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
 (use-package erlang)
-#+END_SRC
+#+end_src
 
 *** Ledger
 Emacs is well-suited for manipulating ledger files.
 
-#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp :tangle emacs/init.el
 (setq ledger-binary-path "hledger")
 (use-package ledger-mode)
 
 (add-to-list 'load-path "~/.emacs.d/lisp")
 (require 'beancount)
-#+END_SRC
+#+end_src
 
 *** PDF
 
 Viewing PDF documents inside Emacs removes the need for another tool.
 
-#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+#+begin_src emacs-lisp :tangle emacs/init.el
 (use-package pdf-tools
   :init
   (pdf-tools-install))
-#+END_SRC
+#+end_src
