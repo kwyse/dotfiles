@@ -9,6 +9,9 @@ Script to bootstrap.
 #+END_SRC
 
 * Emacs
+  :PROPERTIES:
+  :header-args: :tangle emacs/init.el
+  :END:
 
 All other configuration follows from Emacs, because Emacs is the means by which
 Org files are edited.
@@ -442,18 +445,16 @@ Interacting with Cargo is better provided with the ~cargo-minor-mode~ package.
 #+END_SRC
 
 *** Haskell
-
-#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+#+BEGIN_SRC emacs-lisp
 (use-package haskell-mode)
 #+END_SRC
 
 *** Erlang
-#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+#+BEGIN_SRC emacs-lisp
 (use-package erlang)
 #+END_SRC
 
 *** Ledger
-
 Emacs is well-suited for manipulating ledger files.
 
 #+BEGIN_SRC emacs-lisp :tangle emacs/init.el
