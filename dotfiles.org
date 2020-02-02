@@ -415,6 +415,13 @@ package enables additional colours to be used in text.
 			   '("dvipsnames" "xcolor"))))
 #+END_SRC
 
+Ox is used for blogging with Hugo.
+
+#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+(use-package ox-hugo
+  :after ox)
+#+END_SRC
+
 *** Rust
 
 Rust font locking is provided by ~rust-mode~.  The major mode also interfaces
