@@ -460,6 +460,11 @@ Interacting with Cargo is better provided with the ~cargo-minor-mode~ package.
 (use-package haskell-mode)
 #+END_SRC
 
+*** Erlang
+#+BEGIN_SRC emacs-lisp :tangle emacs/init.el
+(use-package erlang)
+#+END_SRC
+
 *** Ledger
 
 Emacs is well-suited for manipulating ledger files.
