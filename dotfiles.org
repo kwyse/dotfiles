@@ -3,8 +3,13 @@
 Script to bootstrap.
 
 #+begin_src bash :tangle init.sh
-if [ ! -f "${HOME}/.emacs/init.el" ]; then
+if [ ! -f "${HOME}/.emacs.d/init.el" ]; then
     ln -s "${PWD}/emacs/init.el" "${HOME}/.emacs.d/init.el"
+fi
+
+if [ ! -f "${HOME}/.elisp-locals.el" ]; then
+    echo '(setq my/secrets-directory ""' >> "${HOME}/.elisp-locals.el"
+    echo '      my/ledger-directory "")' >> "${HOME}/.elisp-locals.el"
 fi
 #+end_src
 
@@ -16,7 +21,7 @@ fi
 All other configuration follows from Emacs, because Emacs is the means by which
 Org files are edited.
 
-** Initialisation
+** Initialization
 
 MELPA is a package archive for Emacs.  Useful libraries are stored there.
 
@@ -41,8 +46,13 @@ downloaded if they are not found locally.
 (setq use-package-always-ensure t)
 #+end_src
 
-** Global settings
+Set host dependant variable definitions.
 
+#+begin_src emacs-lisp
+(load "~/.elisp-locals.el")
+#+end_src
+
+** Global settings
 Preferential global settings are configured next.  The documentation for all of
 these settings is available in Emacs itself.
 
