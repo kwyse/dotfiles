@@ -8,6 +8,7 @@ if [ ! -f "${HOME}/.emacs.d/init.el" ]; then
 fi
 
 if [ ! -f "${HOME}/.elisp-locals.el" ]; then
+    echo "Ensure you populate ${HOME}/.elisp-locals.el with sane values"
     echo '(setq my/secrets-directory ""' >> "${HOME}/.elisp-locals.el"
     echo '      my/ledger-directory "")' >> "${HOME}/.elisp-locals.el"
 fi
