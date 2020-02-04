@@ -480,3 +480,85 @@ Viewing PDF documents inside Emacs removes the need for another tool.
   :init
   (pdf-tools-install))
 #+end_src
+
+* Commands
+** Weight log
+To facilitate daily logging of one's weight.
+
+#+begin_src emacs-lisp :tangle emacs/init.el
+(defun my/log-weight (weight)
+  "Logs a WEIGHT value.
+
+This function should be invoked at most once per day.  When
+invoked more frequently, the WEIGHT value provided will be
+discarded.
+
+In addition to logging weight, this function will commit the
+changes to a git repository and push the changes to its
+configured remote."
+  (interactive "nWeight: ")
+  (let ((buffer (find-file-noselect (format "%s/weight_log.csv" my/secrets-directory))))
+    (priv/log-weight-to-buffer weight buffer)
+    (with-current-buffer buffer
+      (set (make-local-variable 'save-silently) t)
+      (save-buffer)
+      (call-process "git" nil nil nil "commit" "./weight_log.csv" "-m" "Update weight log")
+      (call-process "git" nil nil nil "push"))))
+
+(defun priv/log-weight-to-buffer (weight buffer)
+  "Logs a WEIGHT value to a BUFFER."
+  (with-current-buffer
+      buffer
+    (let* ((current-date (format-time-string "%Y-%m-%d"))
+           (last-line-end-pos (if (save-excursion
+                                    (goto-char (point-max))
+                                    (eq (progn (forward-line 0) (point)) (point-max)))
+                                  (1- (point-max))
+                                (point-max)))
+           (last-date (car (split-string (buffer-substring (save-excursion
+                                                             (goto-char last-line-end-pos)
+                                                             (forward-line 0)
+                                                             (point))
+                                                           last-line-end-pos)
+                                         ","))))
+      (message "%s %s" last-line-end-pos last-date)
+      (if (string> current-date last-date)
+          (progn
+            (goto-char last-line-end-pos)
+            (insert (format "\n%s,%s\n" current-date weight)))
+        (message "Skipping - last log entry (on %s) is not in the past" last-date)))))
+
+(ert-deftest my-test/log-weight-to-buffer ()
+  "Tests logging weight values to a buffer."
+  (with-temp-buffer
+    (insert "2020-01-01,75.0")
+    (priv/log-weight-to-buffer 76.0 (buffer-name))
+    (should (equal (buffer-string)
+                   (format "2020-01-01,75.0\n%s,76.0\n"
+                           (format-time-string "%Y-%m-%d"))))
+
+    (erase-buffer)
+    (insert "2100-01-01,75.0\n")
+    (priv/log-weight-to-buffer 76.0 (buffer-name))
+    (should (equal (buffer-string) "2100-01-01,75.0\n"))))
+#+end_src
+
+** Fava session
+Fava is a graphical display for beancount ledgers.  This command starts a Fava
+process if one isn't running already, and then displays it in a browser.
+
+#+begin_src emacs-lisp :tangle emacs/init.el
+(defun my/fava ()
+  "Opens Fava."
+  (interactive)
+  (unless (get-process "fava")
+    (let ((buffer (get-buffer-create "*fava*")))
+      (with-current-buffer buffer
+        (setq default-directory my/ledger-directory)
+        (start-process "fava" buffer "fava" "./beancount.ledger"))))
+  (with-current-buffer (get-buffer "*fava*")
+    (save-excursion
+      (goto-char 0)
+      (search-forward-regexp "Running Fava on \\(http://localhost:[0-9]+\\)")
+      (browse-url (match-string 1)))))
+#+end_src
