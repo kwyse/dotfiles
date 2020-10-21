@@ -87,7 +87,9 @@ It's useful to always delete trailing whitespace on save.
 A colour scheme and custom font adds familiarity.
 
 #+begin_src emacs-lisp
-(use-package atom-one-dark-theme)
+(use-package atom-one-dark-theme
+  :init
+  (load-theme 'atom-one-dark t))
 (when (member "Monaco" (font-family-list))
   (set-frame-font "Monaco 12" nil t))
 #+end_src
@@ -196,6 +198,48 @@ functionality.
 (add-hook 'git-commit-setup-hook 'git-commit-turn-on-flyspell)
 #+end_src
 
+*** Helm
+#+begin_src emacs-lisp
+(use-package helm
+  :init
+  (require 'helm-config))
+#+end_src
+
+*** Projectile
+#+begin_src emacs-lisp
+(use-package projectile
+  :init
+  (projectile-mode +1)
+  :bind
+  ("C-S-c p" . projectile-command-map))
+#+end_src
+
+*** Ivy, Counsel and Swiper
+#+begin_src emacs-lisp
+(use-package counsel
+  :init
+  (ivy-mode 1)
+  :bind
+  ("C-x b" . ivy-switch-buffer)
+  ("M-x" . counsel-M-x)
+  ("C-x C-f" . counsel-find-file)
+  ("M-y" . counsel-yank-pop)
+  ("C-s" . swiper-isearch)
+  :config
+  (setq ivy-use-virtual-buffers t
+        ivy-count-format "(%d/%d) "))
+#+end_src
+
+*** Treemacs
+#+begin_src emacs-lisp
+(use-package treemacs
+  :config
+  (treemacs-follow-mode t)
+  (treemacs-resize-icons 14))
+(use-package treemacs-projectile
+  :after treemacs projectile)
+#+end_src
+
 ** Language modes
 
 Most language-specific major modes are provided by third parties, but some are
@@ -205,7 +249,8 @@ included with Emacs.  Both kinds are configured here.
 (use-package lsp-mode
   :bind ("C-c x d" . lsp-find-definition)
   :bind ("C-c x r" . lsp-find-references)
-  :config (setq lsp-prefer-flymake nil))
+  :config (setq lsp-prefer-flymake nil
+                lsp-enable-snippet t))
 
 (use-package lsp-ui)
 
@@ -419,6 +464,31 @@ Ox is used for blogging with Hugo.
   :after ox)
 #+end_src
 
+I use specific format when writing a gratitude journal.  This function creates a
+template for it.
+
+#+begin_src emacs-lisp
+(defun org-journal-insert-entry-template (thought)
+  "Insert a new journal entry with a provided THOUGHT."
+  (interactive "sWhat's on your mind? ")
+  (let ((fname (format-time-string "%F")))
+    (insert (concat "** " thought "\n"))
+    (insert "    :PROPERTIES:\n")
+    (insert (concat "    :EXPORT_DATE: " fname "\n"))
+    (insert (concat "    :EXPORT_FILE_NAME: " fname "\n"))
+    (insert "    :END:\n#+HUGO:MORE\n\n")
+    (save-mark-and-excursion
+      (forward-line -6)
+      (org-cycle-hide-drawers 'children))
+    (insert "*I am grateful for:*\n1. ")
+    (save-mark-and-excursion
+      (insert "\n1.\n1.\n\n")
+      (insert "*What would make today great?*\n1.\n1.\n1.\n\n")
+      (insert "*Daily affirmation: I am...*\n\n")
+      (insert "*What made today amazing?*\n1.\n1.\n1.\n\n")
+      (insert "*How could I have made today better?*\n\n"))))
+#+end_src
+
 *** Rust
 
 Rust font locking is provided by ~rust-mode~.  The major mode also interfaces
@@ -459,6 +529,11 @@ Interacting with Cargo is better provided with the ~cargo-minor-mode~ package.
 *** Erlang
 #+begin_src emacs-lisp
 (use-package erlang)
+#+end_src
+
+*** YAML
+#+begin_src emacs-lisp
+(use-package yaml-mode)
 #+end_src
 
 *** Ledger
