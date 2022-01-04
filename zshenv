@@ -35,10 +35,3 @@ export PATH=$PATH:$HOME/pulls/flutter/bin
 export PATH=$HOME/.local/bin:$PATH
 export PATH=$HOME/.emacs.d/bin:$PATH
 export PATH=$HOME/Library/Python/3.9/bin:$PATH
-
-
-PATH="/Users/E5593510/perl5/bin${PATH:+:${PATH}}"; export PATH;
-PERL5LIB="/Users/E5593510/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-PERL_LOCAL_LIB_ROOT="/Users/E5593510/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-PERL_MB_OPT="--install_base \"/Users/E5593510/perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=/Users/E5593510/perl5"; export PERL_MM_OPT;
