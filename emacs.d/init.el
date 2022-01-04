@@ -50,6 +50,8 @@
 (require 'ox-latex)
 (add-to-list 'org-latex-packages-alist '("newfloat" "minted"))
 (add-to-list 'org-latex-packages-alist '("dvipsnames" "xcolor"))
+;;(add-to-list 'org-latex-packages-alist '"\\PassOptionsToPackage{hyperref}{hidelinks}")
+
 (use-package helm
   :config
   (setq helm-google-suggest-search-url "https://duckduckgo.com/?q=%s"))
@@ -93,9 +95,13 @@
       org-special-ctrl-k t
       org-ctrl-k-protect-subtree 'error)
 
+(require 'ob-rust)
+
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((emacs-lisp . t)
+   (python . t)
+   (rust . t)
    (haskell . t)))
 
 (use-package atom-one-dark-theme)
@@ -151,6 +157,9 @@
 
 (global-set-key [remap dabbrev-expand] 'hippie-expand)
 
+(global-set-key (kbd "M-i") 'imenu)
+(add-hook 'tex-mode-hook #'(lambda () (setq ispell-parser 'tex)))
+
 (global-visual-line-mode)
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
@@ -166,8 +175,18 @@
   (should (equal (split-path-string "foo") '("foo")))
   (should (equal (split-path-string "foo:") '("foo")))
   (should (equal (split-path-string "foo:bar") '("foo" "bar"))))
+
+(defun log-weight (weight)
+  (interactive "sWhat is your weight today? ")
+  (let ((exec-dir "$HOME/projects/awk/weightlog/"))
+    (let ((last-log-line (shell-command-to-string (concat "tail -n1 " exec-dir "log.csv"))))
+      (message "Last log line: %s%s"
+	       last-log-line
+	       (shell-command-to-string (concat exec-dir "log_weight " weight))))))
+
 (unless (member "~/.emacs.d/lisp" load-path)
   (setq load-path (add-to-list 'load-path "~/.emacs.d/lisp")))
+(require 'scroll-other-window)
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 
@@ -180,3 +199,52 @@
 	     buffer-file-name))))
 
 (require 'dired-x)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(org-agenda-files (quote ("~/projects/euler-solutions/euler.org")))
+ '(package-selected-packages
+   (quote
+    (use-package scala-mode sbt-mode rustic pdf-tools password-store magit lsp-ui helm haskell-mode flycheck company-lsp company-box cargo atom-one-dark-theme))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:foreground "#ABB2BF" :background "#282C34")))))
+(put 'narrow-to-region 'disabled nil)
+
+(defun org-next-heading-node ()
+  "Move to the next narrowed heading node."
+  (interactive)
+  (widen)
+  (forward-char 1)
+  (if (search-forward-regexp "^\*+" (point-max) t)
+      (progn
+	(forward-line 0)
+	(org-narrow-to-subtree)
+	(org-content)
+	(org-show-entry))))
+
+(defun org-prev-heading-node ()
+  "Move to the previous narrowed heading node."
+  (interactive)
+  (org-narrow-to-subtree)
+  (goto-char (point-min))
+  (widen)
+  (if (search-backward-regexp "^\*+" (point-min) t)
+      (progn
+	(forward-line 0)
+	(org-narrow-to-subtree)
+	(org-content)
+	(org-show-entry))
+    (progn
+      (org-overview)
+      (goto-char (point-min)))))
+
+(add-hook 'org-mode-hook
+	  (lambda ()
+	    (local-set-key (kbd "C-c n") 'org-next-heading-node)
+	    (local-set-key (kbd "C-c p") 'org-prev-heading-node)))

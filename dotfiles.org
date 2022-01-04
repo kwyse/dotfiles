@@ -486,7 +486,24 @@ template for it.
       (insert "*What would make today great?*\n1.\n1.\n1.\n\n")
       (insert "*Daily affirmation: I am...*\n\n")
       (insert "*What made today amazing?*\n1.\n1.\n1.\n\n")
+      (insert "*What did Jade do that I'm appreciative of?*\n1.\n\n")
+      (insert "*What did my parents do that I'm appreciative of?*\n1.\n\n")
       (insert "*How could I have made today better?*\n\n"))))
+#+end_src
+
+#+begin_src emacs-lisp
+(use-package org-roam
+  :config
+  (make-directory "~/commonplace" t)
+  (setq org-roam-directory "~/commonplace")
+  (add-hook 'after-init-hook 'org-roam-mode))
+
+(use-package org-ref
+  :config
+  (setq reftex-default-bibliography '("~/commonplace/references.bib")
+  org-ref-bibliography-notes "~/commonplace/notes.org"
+  org-ref-default-bibliography '("~/commonplace/references.bib")
+  org-ref-pdf-directory "~/commonplace/bibtex-pdfs/"))
 #+end_src
 
 *** Rust
@@ -534,6 +551,11 @@ Interacting with Cargo is better provided with the ~cargo-minor-mode~ package.
 *** YAML
 #+begin_src emacs-lisp
 (use-package yaml-mode)
+#+end_src
+
+*** Jq
+#+begin_src emacs-lisp
+(use-package jq-mode)
 #+end_src
 
 *** Ledger

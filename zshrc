@@ -38,8 +38,8 @@ setopt auto_menu                # Enable completion menu on tab press
 setopt auto_name_dirs           # Absolute name parameters become dirs
 setopt always_to_end            # After completion, move cursor to end
 setopt complete_in_word         # Allow completion from within
-setopt correct                  # Enable command spell correction
-setopt correctall               # Enable argument spell correction
+unsetopt correct                  # Enable command spell correction
+unsetopt correctall               # Enable argument spell correction
 setopt prompt_subst             # Enable expansions and substitutions
 setopt multios                  # Allow implicit tees and cats
 
@@ -177,3 +177,12 @@ function parse_git_state() {
 
 # ---------------------------------------------------------------------
 # ---------------------------------------------------------------------
+
+eval "$(rbenv init -)"
+eval "$(pyenv init -)"
+source <(kubectl completion zsh)
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+[ -f "/Users/krishanwyse/.ghcup/env" ] && source "/Users/krishanwyse/.ghcup/env" # ghcup-env
