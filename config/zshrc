@@ -1,0 +1,22 @@
+#!/bin/zsh
+
+# Prompt
+# %F to %f: sets color
+# %T: time in 24h format
+# %~: current directory
+PS1="%F{green}%T%f %F{yellow}%~%f %F{blue}$%f "
+
+# Keybindings
+bindkey "^P"    history-search-backward
+bindkey "^N"    history-search-forward
+
+# Global aliases
+alias ls="ls -Gp"
+alias gst="git status"
+alias gch="git checkout"
+alias gad="git add"
+alias gco="git commit"
+alias gph="git push"
+
+# Global exports
+export PATH="$HOME/.local/bin:$PATH"
