@@ -11,7 +11,7 @@ repo_dir=$(dirname "$(realpath $0)")
 # First, symlink individual files expected to exist in $HOME
 for file in zshrc
 do
-  if [ -e "$HOME/.$file" ]; then
+  if [ -f "$HOME/.$file" ] || [ -L "$HOME/.$file" ]; then
     echo ".$file config file already exists in $HOME, skipping"
   else
     ln -s "$repo_dir/config/$file" "$HOME/.$file"
