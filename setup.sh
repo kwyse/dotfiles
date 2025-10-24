@@ -26,7 +26,7 @@ if [ ! -d "$config_root" ]; then
 fi
 
 # Next, symlink directories expected to exist in $HOME/.config
-for dir in alacritty helix
+for dir in alacritty helix zellij
 do
   if [ -e "$config_root/$dir" ]; then
     echo "$dir config dir already exists in $config_root, skipping"
