@@ -1,1 +1,7 @@
 theme = "catppuccin_mocha"
+
+[editor]
+auto-pairs = false
+
+[keys.select."\\"]
+";" = "flip_selections"

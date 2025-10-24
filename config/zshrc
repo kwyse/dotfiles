@@ -16,7 +16,9 @@ alias gst="git status"
 alias gch="git checkout"
 alias gad="git add"
 alias gco="git commit"
+alias gpl="git pull"
 alias gph="git push"
+alias glz="lazygit"
 
 # Global exports
 export PATH="$HOME/.local/bin:$PATH"
