@@ -1,6 +1,6 @@
 [[language]]
 name = "python"
-language-servers = ["ruff", "pylsp"]
+language-servers = ["ruff", "pylsp", "basedpyright"]
 formatter = { command = "ruff", args = ["format", "--line-length", "88", "-"] }
 auto-format = true
 
@@ -10,3 +10,7 @@ args = ["server"]
 
 [language-server.pylsp]
 command = "pylsp"
+
+[language-server.basedpyright]
+command = "basedpyright-langserver"
+args = ["--stdio"]
